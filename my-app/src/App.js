@@ -40,24 +40,24 @@ function SearchBar() {
 function Nav() {
 
   return (
-    <div className="grid grid-cols-2 content-between">
+    <div className="grid grid-cols-2 content-between flex-auto">
       <div className="grid grid-cols-4 content-between">
-        <div className="border-red-500 border-2">
+        <div className="border-red-500 border-2 grid justify-items-center">
           <Link to="/">
             <h1>LOGO</h1>
           </Link>
         </div>
-        <div className="border-red-500 border-2">
+        <div className="border-red-500 border-2 grid justify-items-center">
           <Link to="/boxscores">
             <h1>Box Scores</h1>
           </Link>
         </div>
-        <div className="border-red-500 border-2">
+        <div className="border-red-500 border-2 grid justify-items-center">
           <Link to="/players">
             <h1>Player Info</h1>
           </Link>
         </div>
-        <div className="border-red-500 border-2">
+        <div className="border-red-500 border-2 grid justify-items-center">
           <Link to="/teams">
             <h1>Team Info</h1>
           </Link>
@@ -73,7 +73,7 @@ function Nav() {
 function App() {
   return (
     <Router>
-      <div>
+      <div >
         <Nav />
       </div>
       <Routes>
