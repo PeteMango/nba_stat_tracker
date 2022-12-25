@@ -11,7 +11,7 @@ team = [team for team in nba_teams if team['full_name'] == 'Golden State Warrior
 
 nba_players = players.get_players()
 player = [player for player in nba_players if player['full_name'] == 'Norman Powell'][0]
-# print(player)
+print(player)
     # outputs {'id': 1626181, 'full_name': 'Norman Powell', 'first_name': 'Norman', 'last_name': 'Powell', 'is_active': True}
 
 
