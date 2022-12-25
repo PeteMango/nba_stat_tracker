@@ -1,11 +1,11 @@
-from nba_api.stats.endpoints import commonplayerinfo
 from nba_api.stats.static import players
-from nba_api.live.nba.endpoints import scoreboard
 from nba_api.live.nba.endpoints import boxscore
+from nba_api.live.nba.endpoints import scoreboard
+from nba_api.stats.endpoints import commonplayerinfo
 
-# player_info = commonplayerinfo.CommonPlayerInfo(player_id=2544)
-# dict = player_info.available_seasons.get_dict(player_id=2544)
-# print(dict)
+player_info = commonplayerinfo.CommonPlayerInfo(player_id=2544)
+dict = player_info.available_seasons.get_dict(player_id=2544)
+print(dict)
 
 # print(players.find_players_by_full_name('lebron james'))
 
