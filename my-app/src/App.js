@@ -48,17 +48,17 @@ function Nav() {
             <img src={logo} alt="LOGO" className="h-12"/>
           </Link>
         </div>
-        <div className="grid content-center text-center">
+        <div className="grid content-center text-center hover:underline">
           <Link to="/boxscores">
             <h1>Box Scores</h1>
           </Link>
         </div>
-        <div className="grid content-center text-center">
+        <div className="grid content-center text-center hover:underline">
           <Link to="/players">
             <h1>Player Info</h1>
           </Link>
         </div>
-        <div className="grid content-center text-center">
+        <div className="grid content-center text-center hover:underline">
           <Link to="/teams">
             <h1>Team Info</h1>
           </Link>
