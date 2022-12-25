@@ -2,7 +2,7 @@ import React from 'react'
 
 function Game () {
     return (
-        <div className="border-cyan-500 border-2 py-3 px-5">GAME</div>
+        <div className="border-cyan-500 border-2 py-3 px-5 my-3 mx-5">GAME</div>
     );
 }
 
