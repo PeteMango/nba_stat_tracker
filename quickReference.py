@@ -78,13 +78,13 @@ pbp = pbp.get_data_frames()[0]
 pbp.head()
 # print(pbp)
 
-from nba_api.live.nba.endpoints import playbyplay
-pbp2 = playbyplay.PlayByPlay(last_game_id)
-line = "{action_number}: {period}:{clock} {player_id} ({action_type})"
-actions = pbp2.get_dict()['game']['actions']
-for action in actions:
-    player_name = ''
-    player = players.find_player_by_id(action['personId'])
-    if player is not None:
-        player_name = player['full_name']
-    print(line.format(action_number=action['actionNumber'],period=action['period'],clock=action['clock'],action_type=action['actionType'],player_id=player_name))
+# from nba_api.live.nba.endpoints import playbyplay
+# pbp2 = playbyplay.PlayByPlay(last_game_id)
+# line = "{action_number}: {period}:{clock} {player_id} ({action_type})"
+# actions = pbp2.get_dict()['game']['actions']
+# for action in actions:
+#     player_name = ''
+#     player = players.find_player_by_id(action['personId'])
+#     if player is not None:
+#         player_name = player['full_name']
+#     print(line.format(action_number=action['actionNumber'],period=action['period'],clock=action['clock'],action_type=action['actionType'],player_id=player_name))
