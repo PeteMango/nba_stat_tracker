@@ -1,8 +1,19 @@
 import React from 'react'
+import {
+	BrowserRouter as Router,
+	Routes,
+	Route,
+	Link
+} from 'react-router-dom';
+
 
 function Game () {
     return (
-        <div className="border-cyan-500 border-2 py-3 px-5 my-3 mx-5">GAME</div>
+        <div className="border-cyan-500 border-2 py-5 px-10 my-5 mx-10">
+            <Link to="/gamedetails">
+                GAME    
+            </Link>    
+        </div>
     );
 }
 

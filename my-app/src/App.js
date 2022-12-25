@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+import logo from './logo.png';
 import './App.css';
 import { useState } from 'react';
 import {
@@ -11,6 +11,7 @@ import Home from './component/HomePage';
 import BoxScores from './component/BoxScores'
 import PlayerPage from './component/PlayerInfo'
 import TeamPage from './component/TeamInfo'
+import GameDetails from './component/GameDetail'
 
 
 function SearchBar() {
@@ -40,31 +41,31 @@ function SearchBar() {
 function Nav() {
 
   return (
-    <div className="grid grid-cols-2 content-between flex-auto">
-      <div className="grid grid-cols-4 content-between">
-        <div className="border-red-500 border-2 grid justify-items-center">
+    <div className="grid grid-cols-2 content-between flex-auto ">
+      <div className="bg-indigo-500 grid grid-cols-4 content-between py-2">
+        <div className="grid justify-items-center">
           <Link to="/">
-            <h1>LOGO</h1>
+            <img src={logo} alt="LOGO" className="h-6"/>
           </Link>
         </div>
-        <div className="border-red-500 border-2 grid justify-items-center">
+        <div className="grid justify-items-center">
           <Link to="/boxscores">
             <h1>Box Scores</h1>
           </Link>
         </div>
-        <div className="border-red-500 border-2 grid justify-items-center">
+        <div className="grid justify-items-center">
           <Link to="/players">
             <h1>Player Info</h1>
           </Link>
         </div>
-        <div className="border-red-500 border-2 grid justify-items-center">
+        <div className="grid justify-items-center">
           <Link to="/teams">
             <h1>Team Info</h1>
           </Link>
         </div>
       </div>
       <div className="grid grid-cols-1 content-between">
-        <input className="border-red-500 border-2" type="text" placeholder="Search" />
+        <input className="bg-indigo-500 py-2" type="text" placeholder="Search" />
       </div>
     </div>
   );
@@ -81,6 +82,7 @@ function App() {
         <Route exact path='/boxscores' element={< BoxScores />}></Route>
         <Route exact path='/players' element={< PlayerPage />}></Route>
         <Route exact path='/teams' element={< TeamPage />}></Route>
+        <Route exact path='/gamedetails' element={< GameDetails />}></Route>
       </Routes>
     </Router>
   );
