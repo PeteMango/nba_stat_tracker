@@ -8,7 +8,6 @@ import {
 	Link
 } from 'react-router-dom';
 import Home from './component/HomePage';
-import Game from './component/BoxScores'
 import BoxScores from './component/BoxScores'
 import PlayerPage from './component/PlayerInfo'
 import TeamPage from './component/TeamInfo'
@@ -43,29 +42,29 @@ function Nav() {
   return (
     <div className="grid grid-cols-2 content-between">
       <div className="grid grid-cols-4 content-between">
-        <div>
+        <div className="border-red-500 border-2">
           <Link to="/">
             <h1>LOGO</h1>
           </Link>
         </div>
-        <div>
+        <div className="border-red-500 border-2">
           <Link to="/boxscores">
             <h1>Box Scores</h1>
           </Link>
         </div>
-        <div>
+        <div className="border-red-500 border-2">
           <Link to="/players">
             <h1>Player Info</h1>
           </Link>
         </div>
-        <div>
+        <div className="border-red-500 border-2">
           <Link to="/teams">
             <h1>Team Info</h1>
           </Link>
         </div>
       </div>
       <div className="grid grid-cols-1 content-between">
-        <div><h1>Search Bar</h1></div>
+        <input className="border-red-500 border-2" type="text" placeholder="Search" />
       </div>
     </div>
   );
@@ -77,9 +76,6 @@ function App() {
       <div>
         <Nav />
       </div>
-      {/* <div>
-        <SearchBar/>
-      </div> */}
       <Routes>
         <Route exact path='/' element={< Home />}></Route>
         <Route exact path='/boxscores' element={< BoxScores />}></Route>
