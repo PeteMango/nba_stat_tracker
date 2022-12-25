@@ -42,30 +42,30 @@ function Nav() {
 
   return (
     <div className="grid grid-cols-2 content-between flex-auto ">
-      <div className="bg-indigo-500 grid grid-cols-4 content-between py-2">
+      <div className="border-b-neutral-500 border-2 grid grid-cols-4 content-center py-2">
         <div className="grid justify-items-center">
           <Link to="/">
-            <img src={logo} alt="LOGO" className="h-6"/>
+            <img src={logo} alt="LOGO" className="h-12"/>
           </Link>
         </div>
-        <div className="grid justify-items-center">
+        <div className="grid content-center text-center">
           <Link to="/boxscores">
             <h1>Box Scores</h1>
           </Link>
         </div>
-        <div className="grid justify-items-center">
+        <div className="grid content-center text-center">
           <Link to="/players">
             <h1>Player Info</h1>
           </Link>
         </div>
-        <div className="grid justify-items-center">
+        <div className="grid content-center text-center">
           <Link to="/teams">
             <h1>Team Info</h1>
           </Link>
         </div>
       </div>
-      <div className="grid grid-cols-1 content-between">
-        <input className="bg-indigo-500 py-2" type="text" placeholder="Search" />
+      <div className="border-b-neutral-500 border-2 grid grid-cols-1 content-center">
+        <input className="border-neutral-500 border-2 m-4 py-4 rounded-full h-3 px-3" type="text" placeholder="Search" />
       </div>
     </div>
   );
