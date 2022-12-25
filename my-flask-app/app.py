@@ -9,20 +9,18 @@ mongo = PyMongo(app)
 def index():
     return '''
         <form method="POST" action="/create" enctype="multipart/form-data">
-            <input type="text" name="username">
-            <input type="file" name="profile_image">
+            <input type="text" name="player-name">
+            <input type="text" name="player-team">
+            <input type="text" name="player-points">
             <input type="submit"> 
         <form>
     '''
 
 @app.route('/create', methods=['POST'])
 def create():
-    if 'profile_image' in request.files:
-        profile_image = request.files['profile_image']
-        mongo.save_file(profile_image.filename, profile_image)
-        mongo.db.users.insert_one({
-            'username': request.form.get('username'),
-            'profile_image_name': profile_image.filename
-        })
+    mongo.db.players.insert_one({
+        'name': request.form.get('player-name'),
+        'team': request.form.get('player-team'),
+        'points': request.form.get('player-points')
+    })
     return 'Done!'
-
