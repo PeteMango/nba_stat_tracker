@@ -28,4 +28,4 @@ function BoxScores () {
     );
 }
 
-export default BoxScores
+export default BoxScores;

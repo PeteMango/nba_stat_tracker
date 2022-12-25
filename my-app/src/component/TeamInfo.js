@@ -12,3 +12,5 @@ function TeamPage () {
         </div>
     );
 }
+
+export default TeamPage;

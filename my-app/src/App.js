@@ -7,6 +7,11 @@ import {
 	Route,
 	Link
 } from 'react-router-dom';
+import Home from './component/HomePage';
+import Game from './component/BoxScores'
+import BoxScores from './component/BoxScores'
+import PlayerPage from './component/PlayerInfo'
+import TeamPage from './component/TeamInfo'
 
 
 function SearchBar() {
@@ -38,10 +43,26 @@ function Nav() {
   return (
     <div className="grid grid-cols-2 content-between">
       <div className="grid grid-cols-4 content-between">
-        <div><h1>LOGO</h1></div>
-        <div><h1>Box Scores</h1></div>
-        <div><h1>Player Info</h1></div>
-        <div><h1>Team Info</h1></div>
+        <div>
+          <Link to="/">
+            <h1>LOGO</h1>
+          </Link>
+        </div>
+        <div>
+          <Link to="/boxscores">
+            <h1>Box Scores</h1>
+          </Link>
+        </div>
+        <div>
+          <Link to="/players">
+            <h1>Player Info</h1>
+          </Link>
+        </div>
+        <div>
+          <Link to="/teams">
+            <h1>Team Info</h1>
+          </Link>
+        </div>
       </div>
       <div className="grid grid-cols-1 content-between">
         <div><h1>Search Bar</h1></div>
@@ -56,9 +77,15 @@ function App() {
       <div>
         <Nav />
       </div>
-      <div>
+      {/* <div>
         <SearchBar/>
-      </div>
+      </div> */}
+      <Routes>
+        <Route exact path='/' element={< Home />}></Route>
+        <Route exact path='/boxscores' element={< BoxScores />}></Route>
+        <Route exact path='/players' element={< PlayerPage />}></Route>
+        <Route exact path='/teams' element={< TeamPage />}></Route>
+      </Routes>
     </Router>
   );
 }

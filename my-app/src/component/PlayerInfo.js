@@ -22,3 +22,5 @@ function PlayerPage () {
         </div>
     );
 }
+
+export default PlayerPage;
