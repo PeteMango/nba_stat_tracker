@@ -1,6 +1,7 @@
 import pandas
 from nba_api.stats.static import teams
 from nba_api.stats.static import players
+from nba_api.live.nba.endpoints import scoreboard
 
 from flask import Flask, request, url_for, jsonify
 from flask_pymongo import PyMongo
@@ -8,6 +9,7 @@ from flask_pymongo import PyMongo
 app = Flask(__name__)
 app.config['MONGO_URI'] = 'mongodb+srv://petemango:mc4VOkwpfFT0wmoF@nba-stat-tracker.z76bfbc.mongodb.net/test'
 mongo = PyMongo(app)
+app.run(debug=1)
 
 @app.route('/')
 def index():
@@ -50,3 +52,6 @@ def player_stats():
     activity = player['is_active']
 
     return f'id:{id}\nname:{name}\nactivity:{activity}'
+
+# @app.route('/boxscores', methods=['GET'])
+# def current_games():

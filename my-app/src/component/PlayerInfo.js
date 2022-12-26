@@ -1,8 +1,62 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 function PlayerPage () {
+    /* player information */
+    const [player_id, set_player_id] = useState(null)
+    const [is_active, set_player_activity] = useState(null)
+
+    const [full_name, set_player_full_name] = useState(null)
+    const [first_name, set_player_first_name] = useState(null)
+    const [last_name, set_player_last_name] = useState(null)
+
+
+    useEffect(() => {
+        fetch('/player').then(response => {
+            if(response.ok) {
+                return response.json()
+            } throw response;
+        }).then(data => {set_player_id(data.id)})
+    })
+
+    useEffect(() => {
+        fetch('/player').then(response => {
+            if(response.ok) {
+                return response.json()
+            } throw response;
+        }).then(data => {set_player_full_name(data.full_name)})
+    })
+
+    useEffect(() => {
+        fetch('/player').then(response => {
+            if(response.ok) {
+                return response.json()
+            } throw response;
+        }).then(data => {set_player_first_name(data.first_name)})
+    })
+
+    useEffect(() => {
+        fetch('/player').then(response => {
+            if(response.ok) {
+                return response.json()
+            } throw response;
+        }).then(data => {set_player_last_name(data.last_name)})
+    })
+
+    useEffect(() => {
+        fetch('/player').then(response => {
+            if(response.ok) {
+                return response.json()
+            } throw response;
+        }).then(data => {set_player_activity(data.is_active === 'true'?"no":"yes")})
+    })
+
     return (
         <div>
+            <p>the name of the player is {full_name}</p>
+            <p>the first name of the player is {first_name}</p>
+            <p>the last name of the player is {last_name}</p>
+            <p>the id of the player is {player_id}</p>
+            <p>the player is active {is_active}</p>
             <div className="grid grid-cols-1 content-between py-10 px-20">
                 <input className="border-cyan-500 border-2" type="text" placeholder="Search Player" />
             </div>
