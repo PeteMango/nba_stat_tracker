@@ -9,9 +9,11 @@ import {
 } from 'react-router-dom';
 import Home from './component/HomePage';
 import BoxScores from './component/BoxScores'
-import PlayerPage from './component/PlayerInfo'
+// import PlayerPage from './component/PlayerInfo'
 import TeamPage from './component/TeamInfo'
 import GameDetails from './component/GameDetail'
+import PlayerProfile from './component/PlayerProfile'
+import TeamProfile from './component/TeamProfile'
 
 
 function SearchBar() {
@@ -41,7 +43,7 @@ function SearchBar() {
 function Nav() {
 
   return (
-    <div className="grid grid-cols-2 content-between flex-auto ">
+    <div className="grid grid-cols-2 content-between flex-auto font-black font-mono subpixel-antialiased tracking-tight">
       <div className="border-b-neutral-500 border-2 grid grid-cols-4 content-center py-2">
         <div className="grid justify-items-center">
           <Link to="/">
@@ -80,9 +82,11 @@ function App() {
       <Routes>
         <Route exact path='/' element={< Home />}></Route>
         <Route exact path='/boxscores' element={< BoxScores />}></Route>
-        <Route exact path='/players' element={< PlayerPage />}></Route>
+        {/* <Route exact path='/players' element={< PlayerPage />}></Route> */}
         <Route exact path='/teams' element={< TeamPage />}></Route>
         <Route exact path='/gamedetails' element={< GameDetails />}></Route>
+        <Route exact path='/playerprofile' element={< PlayerProfile />}></Route>
+        <Route exact path='/teamprofile' element={< TeamProfile />}></Route>
       </Routes>
     </Router>
   );
