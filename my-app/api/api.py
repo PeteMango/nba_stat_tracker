@@ -12,9 +12,8 @@ def get_player():
     nba_players = players.get_active_players()
     target = None
     for player in nba_players:
-        if player['full_name'] == "Stephen Curry":
+        if player['full_name'] == "Andrew Wiggins":
             target = player
             break
     
     return jsonify(player)
-
