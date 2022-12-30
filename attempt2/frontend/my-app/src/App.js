@@ -5,90 +5,49 @@ import './App.css';
 
 function App() {
 
-  // const [stats, setStats] = useState(
-  //   {
-  //   assists: 0,
-  //   blocks: 0,
-  //   drebounds: 0,
-  //   }
-  // );
-
+  const [input, setInput] = useState('');
+  const [name, setName] = useState(input);
   const [stats, setStats] = useState([])
 
+  const handleChange = (event) => {
+    setInput(event.target.value)
+  }
+
+  const handleClick = () => {
+    setName(input)
+  }
+
   useEffect(() => {
-    axios.get('/api/player/profile/lebron_james').then(res => {
+    const theName = name;
+    const theUrl = '/api/player/profile/'.concat(theName)
+    console.log(theUrl)
+
+    axios.get(theUrl, {
+    }).then(res => {
       setStats(res.data)
     }).catch(err => {
       console.log(err)
     })
-  }, [])
-  // function getData() {
-  //   axios({
-  //     method: "GET",
-  //     url: "/playerstats",
+  }, [name])
+
+  // useEffect(() =>{
+  //   fetch('/api/player/profile/lebron_james').then(
+  //     res => res.json()
+  //   ).then(
+  //     (data) => {
+  //       setStats(data)
+  //     }).catch((error) => {
+  //     console.log(error);
   //   })
-  //   .then((response) => {
-  //     const res = response.data
-  //     setStats(({
-  //       assists: res.ast,
-  //       blocks: res.blk,
-  //       drebounds: res.dreb
-  //     }))     
-  //   }).catch((error) => {
-  //     if (error.response) {
-  //       console.log(error.response)
-  //       console.log(error.response.status)
-  //       console.log(error.response.headers)
-  //     }
-  //   })
-  // }
-
-  // useEffect( () => {
-  //   fetch("/playerstats").then((res) =>
-  //     res.json().then((data) => {
-  //       setStats({
-  //         assists: data.ast,
-  //         blocks: data.blk,
-  //         drebounds: data.dreb,
-  //       });
-  //     })
-  //   );
-  // }, []);
-
-//   useEffect(() => {
-//     fetch('/playerstats').then(response => {
-//         if(response.ok) {
-//             return response.json()
-//         } throw response;
-//     }).then(data => {
-//       setAssists(data.ast)
-//     }).catch(error => {
-//       console.log(error)
-//     })
-// })
-
-// useEffect(() => {
-//   var responseClone;
-//   fetch('http://localhost:5000/playerstats').then(response => {
-//     responseClone = response.clone();
-//     if (response.ok){
-//       return response.json()
-//     } throw response;
-//   }).then(data => {
-//     setAssists(data.ast)
-//   }).catch(error => {
-//     console.log(error)
-//     console.log('response clone is: ', responseClone);
-//     responseClone.text()
-//     .then(bodyText => {
-//       console.log('received the following instead of valid JSON: ', bodyText)
-//     })
-//   })
-// })
+  // });
 
 
   return (
     <div className="App">
+      <div>
+        <input type="text" onChange={handleChange} placeholder="Search for Player"></input>
+        <button onClick={handleClick}>Submit</button>
+      </div>
       {
         stats.map(stat => (
           <div key={stat.first_name}>
@@ -105,29 +64,3 @@ function App() {
 }
 
 export default App;
-
-
-/*
-      ast: "",
-      blk: "",
-      dreb: "",
-      fg3_pct: "",
-      fg3a: "",
-      fg3m: "",
-      fg_pct: "",
-      fga: "",
-      fgm: "",
-      ft_pct: "",
-      fta: "",
-      ftm: "",
-      games_played: "",
-      min: "",
-      oreb: "",
-      pf: "",
-      player_id: "",
-      pts: "",
-      reb: "",
-      season: "",
-      stl: "",
-      turnover: "",      
-      */

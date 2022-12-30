@@ -1,4 +1,4 @@
-# ideas: last x games for a certain player,
+# ideas: last x games for a certain player, 
 
 from flask import Flask
 app = Flask(__name__)
