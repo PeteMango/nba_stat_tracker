@@ -1,66 +1,36 @@
-import React, {useState, useEffect} from 'react';
-import axios from "axios";
+import React from 'react';
 import './App.css';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link
+} from 'react-router-dom'
+
+import Home from './component/Home';
+import PlayerInfo from './component/PlayerInfo';
+import TeamInfo from './component/TeamInfo'; //this one isn't working yet
+import PlayerAverages from './component/PlayerAverages';
+import TodayBoxScores from './component/TodayBoxScores';
+import PlayerLastGame from './component/PlayerLastGame';
 
 
 function App() {
 
-  const [input, setInput] = useState('');
-  const [name, setName] = useState(input);
-  const [stats, setStats] = useState([])
-
-  const handleChange = (event) => {
-    setInput(event.target.value)
-  }
-
-  const handleClick = () => {
-    setName(input)
-  }
-
-  useEffect(() => {
-    const theName = name;
-    const theUrl = '/api/player/profile/'.concat(theName)
-    console.log(theUrl)
-
-    axios.get(theUrl, {
-    }).then(res => {
-      setStats(res.data)
-    }).catch(err => {
-      console.log(err)
-    })
-  }, [name])
-
-  // useEffect(() =>{
-  //   fetch('/api/player/profile/lebron_james').then(
-  //     res => res.json()
-  //   ).then(
-  //     (data) => {
-  //       setStats(data)
-  //     }).catch((error) => {
-  //     console.log(error);
-  //   })
-  // });
-
-
   return (
     <div className="App">
-      <div>
-        <input type="text" onChange={handleChange} placeholder="Search for Player"></input>
-        <button onClick={handleClick}>Submit</button>
-      </div>
-      {
-        stats.map(stat => (
-          <div key={stat.first_name}>
-            <h1>Name: {stat.first_name} {stat.last_name}</h1>
-            <h1>Height: {stat.height_feet}'{stat.height_inches}</h1>
-            <h1>Position: {stat.position}</h1>
-            <h1>Weight: {stat.weight_pounds}</h1>
-            <h1>Team: {stat.team.full_name}</h1>
-          </div>
-        ))
-      }
+      <Router>
+        <Routes>
+          <Route exact path='/' element={< Home />}></Route>
+          <Route exact path='/player/info' element={< PlayerInfo />}></Route>
+          <Route exact path='/team/info' element={< TeamInfo />}></Route>
+          <Route exact path='/player/averages' element={< PlayerAverages />}></Route>
+          <Route exact path='/boxscores/today' element={< TodayBoxScores />}></Route>
+          <Route exact path='/player/lastgame' element={< PlayerLastGame />}></Route>
+        </Routes>
+      </Router>
     </div>
-  );
+  )
 }
 
 export default App;

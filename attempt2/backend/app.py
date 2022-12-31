@@ -1,4 +1,4 @@
-# ideas: last x games for a certain player, 
+# ideas: find the boxscores for all the games in a day
 
 from flask import Flask
 app = Flask(__name__)
@@ -25,17 +25,33 @@ def gameTeamResults(date):
 
 def gameTeamResultsFiltered(date):
     gameResults = gameTeamResults(date)
-    gameDict = {}
+    gameList = []
     for i in range(len(gameResults)):
-        gameDict[gameResults[i]['id']] = []
-        gameDict[gameResults[i]['id']].append(gameResults[i]['status'])
-        gameDict[gameResults[i]['id']].append(gameResults[i]['home_team']['name'])
-        gameDict[gameResults[i]['id']].append(gameResults[i]['home_team']['id'])
-        gameDict[gameResults[i]['id']].append(gameResults[i]['home_team_score'])
-        gameDict[gameResults[i]['id']].append(gameResults[i]['visitor_team']['name'])
-        gameDict[gameResults[i]['id']].append(gameResults[i]['visitor_team']['id'])
-        gameDict[gameResults[i]['id']].append(gameResults[i]['visitor_team_score'])
-    return gameDict
+        gameDict = {}
+        gameDict['game_id'] = gameResults[i]['id']
+        gameDict['status'] = gameResults[i]['status']
+        gameDict['home_team_name'] = gameResults[i]['home_team']['name']
+        gameDict['home_team_id'] = gameResults[i]['home_team']['id']
+        gameDict['home_team_score'] = gameResults[i]['home_team_score']
+        gameDict['away_team_name'] = gameResults[i]['visitor_team']['name']
+        gameDict['away_team_id'] = gameResults[i]['visitor_team']['id']
+        gameDict['away_team_score'] = gameResults[i]['visitor_team_score']
+        gameList.append(gameDict)
+    return gameList
+
+# def gameTeamResultsFiltered(date):
+#     gameResults = gameTeamResults(date)
+#     gameDict = [{}]
+#     for i in range(len(gameResults)):
+#         gameDict[0][gameResults[i]['id']] = []
+#         gameDict[0][gameResults[i]['id']].append(gameResults[i]['status'])
+#         gameDict[0][gameResults[i]['id']].append(gameResults[i]['home_team']['name'])
+#         gameDict[0][gameResults[i]['id']].append(gameResults[i]['home_team']['id'])
+#         gameDict[0][gameResults[i]['id']].append(gameResults[i]['home_team_score'])
+#         gameDict[0][gameResults[i]['id']].append(gameResults[i]['visitor_team']['name'])
+#         gameDict[0][gameResults[i]['id']].append(gameResults[i]['visitor_team']['id'])
+#         gameDict[0][gameResults[i]['id']].append(gameResults[i]['visitor_team_score'])
+#     return gameDict
 
 # yesterday = "2022-12-29"
 # def findGameIDsOnDate(date):
@@ -69,10 +85,13 @@ def profile(name):
 def teams(name):
     name = name.lower()
     index = teamIDs.index(name)
-    index = index + 1
-    link = f"https://www.balldontlie.io/api/v1/teams/{index}"
+    link = f"https://www.balldontlie.io/api/v1/teams/"
     response = urlopen(link)
     jsonData = json.loads(response.read())
+    jsonData = jsonData["data"]
+    # for i in range(len(jsonData)):
+    #     if i != index:
+    #         jsonData.pop(jsonData[i])
     return jsonData
 # returns {"id":28,"abbreviation":"TOR","city":"Toronto","conference":"East","division":"Atlantic","full_name":"Toronto Raptors","name":"Raptors"}
 
@@ -99,18 +118,44 @@ def lastGame(name):
     gameID = 0
     while dateFound == False:
         info = gameTeamResultsFiltered(day)
-        for item in info:
-            if info[item][2] == teamID or info[item][5] == teamID:
-                if info[item][0] == 'Final':
+        # print(info)
+        for i in range(len(info)):
+            # print("teamID is: " + str(teamID) + " and info[i]['home_team_id] is: " + str(info[i]['home_team_id']) + " and info[i]['away_team_id] is: " + str(info[i]['away_team_id']))
+            if info[i]['home_team_id'] == teamID or info[i]['away_team_id'] == teamID:
+                # print("went in")
+                if info[i]['status'] == 'Final':
+                    # print("went in again")
                     dateFound = True
-                    gameID = item
+                    gameID = info[i]['game_id']
+                    break
         day = day - timedelta(days = 1)
     
     day = day + timedelta(days = 1)
     link = f"https://www.balldontlie.io/api/v1/stats?game_ids[]={gameID}&player_ids[]={id}"
     response = urlopen(link)
     jsonData = json.loads(response.read())
-    return jsonData["data"][0]
+    return jsonData["data"]
+
+# def lastGame(name):
+#     day = date.today()
+#     id = findPlayerID(name)
+#     teamID = profile((name))[0]['team']['id']
+#     dateFound = False
+#     gameID = 0
+#     while dateFound == False:
+#         info = gameTeamResultsFiltered(day)
+#         for item in info:
+#             if info[item][2] == teamID or info[item][5] == teamID:
+#                 if info[item][0] == 'Final':
+#                     dateFound = True
+#                     gameID = item
+#         day = day - timedelta(days = 1)
+    
+#     day = day + timedelta(days = 1)
+#     link = f"https://www.balldontlie.io/api/v1/stats?game_ids[]={gameID}&player_ids[]={id}"
+#     response = urlopen(link)
+#     jsonData = json.loads(response.read())
+#     return jsonData["data"][0]
     
 
 
