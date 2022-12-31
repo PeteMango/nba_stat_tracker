@@ -16,6 +16,7 @@ import PlayerLastGame from './component/PlayerLastGame';
 import GameBoxScore from './component/GameBoxScore';
 import TeamLastXGames from './component/TeamLastXGames';
 import TopPerformers from './component/TopPerformers';
+import PlayerPreviousGames from './component/PlayerPreviousGames';
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
           <Route exact path='/boxscores/game' element={< GameBoxScore />}></Route> // this is a bit redundant and may need some reconfiguring
           <Route exact path='/team/lastgames' element={< TeamLastXGames />}></Route> // figure out how to get rid of extra things on date section
           <Route exact path='/player/topperformers' element={< TopPerformers />}></Route>
+          <Route exact path='/player/games' element={< PlayerPreviousGames />}></Route>
         </Routes>
       </Router>
     </div>
