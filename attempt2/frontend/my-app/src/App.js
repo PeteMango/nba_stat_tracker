@@ -30,8 +30,8 @@ function App() {
           <Route exact path='/player/averages' element={< PlayerAverages />}></Route>
           <Route exact path='/boxscores/today' element={< TodayBoxScores />}></Route>
           <Route exact path='/player/lastgame' element={< PlayerLastGame />}></Route>
-          <Route exact path='/boxscores/game' element={< GameBoxScore />}></Route>
-          <Route exact path='/team/lastgames' element={< TeamLastXGames />}></Route>
+          <Route exact path='/boxscores/game' element={< GameBoxScore />}></Route> // this is a bit redundant and may need some reconfiguring
+          <Route exact path='/team/lastgames' element={< TeamLastXGames />}></Route> // figure out how to get rid of extra things on date section
           <Route exact path='/player/topperformers' element={< TopPerformers />}></Route>
         </Routes>
       </Router>
