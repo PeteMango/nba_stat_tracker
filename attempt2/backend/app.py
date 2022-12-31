@@ -88,12 +88,20 @@ def teams(name):
     link = f"https://www.balldontlie.io/api/v1/teams/"
     response = urlopen(link)
     jsonData = json.loads(response.read())
-    jsonData = jsonData["data"]
-    # for i in range(len(jsonData)):
-    #     if i != index:
-    #         jsonData.pop(jsonData[i])
-    return jsonData
+    jsonData = jsonData["data"][index]
+    jsonList = []
+    jsonList.append(jsonData)
+    return jsonList
 # returns {"id":28,"abbreviation":"TOR","city":"Toronto","conference":"East","division":"Atlantic","full_name":"Toronto Raptors","name":"Raptors"}
+
+# def teams(name):
+#     name = name.lower()
+#     index = teamIDs.index(name)
+#     link = f"https://www.balldontlie.io/api/v1/teams/"
+#     response = urlopen(link)
+#     jsonData = json.loads(response.read())
+#     jsonData = jsonData["data"][index]
+#     return jsonData
 
 @app.route("/api/player/stats/averages/<name>") # gives json for the season averages for the player (i think this may be wrong tho whoever made it is on something)
 def averages(name):
