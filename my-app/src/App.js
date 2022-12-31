@@ -12,7 +12,6 @@ import BoxScores from './component/BoxScores'
 import PlayerPage from './component/PlayerInfo'
 import TeamPage from './component/TeamInfo'
 import GameDetails from './component/GameDetail'
-// import PlayerProfile from './component/PlayerProfile'
 import TeamProfile from './component/TeamProfile'
 
 

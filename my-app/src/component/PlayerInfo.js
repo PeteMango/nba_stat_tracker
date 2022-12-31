@@ -1,100 +1,33 @@
-// <<<<<<< HEAD
-// import React, { Component } from 'react'
-// import axios from 'axios';
-// import {
-// 	BrowserRouter as Router,
-// 	Routes,
-// 	Route,
-// 	Link
-// } from 'react-router-dom';
-
-
-
-// export class PlayerPage extends Component () {
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-//             playerName: null,
-//             playerStats: {}
-//         };
-//     }
-
-//     handleChange = (event) => {
-//         const replace = event.target.value.split(" ").join("_");
-//         if (replace.length > 0){
-//             this.setState({ playerName: replace});
-//         }
-//     };
-
-//     handleSubmit = (e) => {
-//         e.preventDefault();
-//         this.getPlayerId();
-//     };
-//     getPlayerId = () => {
-//         axios.get("https://www.balldontlie.io/api/v1/players?search=${this.state.playerName").then(async (res) => {
-//             await this.getPlayerStats(res.data.data[0].id)
-//         }).catch((err) => {
-//             console.log(err);
-//         })
-//     }
-//     getPlayerStats = (playerId) => {
-//         axios.get("https://www.balldontlie.io/api/v1/season_averages?season=2022&player_ids[]=${playerId}").then(async (res) => {
-//             console.log(res.data.data);
-//             this.setState({ playerStats: res.data.data[0]});
-//         })
-//         .catch((err) => {
-//             console.log(err);
-//         })
-//     }
-
-//     render() {
-//         return (
-//             <div className="PlayerPage">
-//                 <div className="grid grid-cols-1 content-between py-10 px-20">
-//                     <form >
-//                     {/* onSubmit={this.handleSubmit} */}
-//                         <input className="border-neutral-500 border-2 m-4 py-4 rounded-full h-3 px-3" type="text" placeholder="Search Player" /> 
-//                         {/* value={this.state.value} onChange={this.handleChange} */}
-//                         <input type="submit" value="submit" />
-//                     </form>
-//                 </div>
-//                 {/* <div className="grid content-center text-center hover:underline">
-//                     <Link to="/playerprofile">
-//                         <h1>Enter</h1>
-//                     </Link>
-//                 </div> */}
-//                 <div className="grid justify-center grid-cols-6 gap-4 border-red-900 border-2 my-5 text-center">
-//                     {/* <div>team: {this.state.playerState["team"]};</div>
-//                     <div>games played: {this.state.playerState["games_played"]};</div>
-//                     <div>ppg: {this.state.playerState["pts"]};</div>
-//                     <div>apg: {this.state.playerState["ast"]};</div>
-//                     <div>rpg: {this.state.playerState["reb"]};</div>
-//                     <div>fg%: {this.state.playerState["fg_pct"]};</div> */}
-//                     <div>test</div>
-//                 </div>
-//                 <div className="grid justify-center grid-cols-6 gap-4">
-//                     <div className="grid justify-center border-red-500 border-2">NxMs</div>
-//                     <div className="grid justify-center border-red-500 border-2">PPG Leaders</div>
-//                     <div className="grid justify-center border-red-500 border-2">APG Leaders</div>
-//                     <div className="grid justify-center border-red-500 border-2">RPG Leaders</div>
-//                     <div className="grid justify-center border-red-500 border-2">SPG Leaders</div>
-//                     <div className="grid justify-center border-red-500 border-2">BPG Leaders</div>
-//                 </div>
-// =======
 import React, { useState, useEffect } from 'react'
+import axios from 'axios';
+
+const api = axios.create({
+    baseURL: 'http://127.0.0.1:5000/player/'
+})
 
 function PlayerPage () {
+    state = {
+        courses: []
+    }
+
+    // constructor() {
+    //     super();
+    //     api.get('/').then(res=> {
+    //         console.log(res.data)
+    //         this.setState({ courses : res.data})
+    //     })
+    // }
+
     /* player information */
     const [player_id, set_player_id] = useState(null)
     const [is_active, set_player_activity] = useState(null)
 
     const [full_name, set_player_full_name] = useState(null)
     const [first_name, set_player_first_name] = useState(null)
-    const [last_name, set_player_last_name] = useState(null)
-
+    const [last_name, set_player_last_name] = useState(null)        
 
     useEffect(() => {
-        fetch('/player').then(response => {
+        fetch('/player/').then(response => {
             if(response.ok) {
                 return response.json()
             } throw response;
