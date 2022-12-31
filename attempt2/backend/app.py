@@ -1,4 +1,7 @@
 # ideas: find the boxscores for all the games in a day
+# to get a teams last few games boxscores, use:
+# https://www.balldontlie.io/api/v1/games?team_ids[]=2&per_page=82&seasons[]=2022 to find the game ids of the last few games
+# https://www.balldontlie.io/api/v1/stats?game_ids[]=857877&per_page=50 to find the box scores of each game
 
 from flask import Flask
 app = Flask(__name__)
@@ -39,30 +42,47 @@ def gameTeamResultsFiltered(date):
         gameList.append(gameDict)
     return gameList
 
-# def gameTeamResultsFiltered(date):
-#     gameResults = gameTeamResults(date)
-#     gameDict = [{}]
-#     for i in range(len(gameResults)):
-#         gameDict[0][gameResults[i]['id']] = []
-#         gameDict[0][gameResults[i]['id']].append(gameResults[i]['status'])
-#         gameDict[0][gameResults[i]['id']].append(gameResults[i]['home_team']['name'])
-#         gameDict[0][gameResults[i]['id']].append(gameResults[i]['home_team']['id'])
-#         gameDict[0][gameResults[i]['id']].append(gameResults[i]['home_team_score'])
-#         gameDict[0][gameResults[i]['id']].append(gameResults[i]['visitor_team']['name'])
-#         gameDict[0][gameResults[i]['id']].append(gameResults[i]['visitor_team']['id'])
-#         gameDict[0][gameResults[i]['id']].append(gameResults[i]['visitor_team_score'])
-#     return gameDict
+def getGameIDfromDate(day):
+    gameList = gameTeamResultsFiltered(day)
+    gameIDs = []
+    for i in range(len(gameList)):
+        gameIDs.append(gameList[i]['game_id'])
+    return gameIDs
 
-# yesterday = "2022-12-29"
-# def findGameIDsOnDate(date):
-    # IDs = []
-    # link = f"https://www.balldontlie.io/api/v1/games?start_date={date}&end_date={date}"
-    # response = urlopen(link)
-    # jsonData = json.loads(response.read())
-    # return jsonData["data"]
-    # for i in range(len(jsonData['data'])):
-    #     IDs.append(jsonData['data'][i]['id'])
-    # return IDs
+def findBestPlayersfromGames(gameIDs):
+    bestScores = []
+    for i in range(len(gameIDs)):
+        bestScores.append({})
+        gameInfo = boxScore(gameIDs[i])
+        bestScores[i]['gameID'] = gameIDs[i]
+        for j in range(len(gameInfo)):
+            pts = gameInfo[j]['pts']
+            orb = gameInfo[j]['oreb']
+            drb = gameInfo[j]['dreb']
+            ast = gameInfo[j]['ast']
+            stl = gameInfo[j]['stl']
+            blk = gameInfo[j]['blk']
+            pf = gameInfo[j]['pf']
+            tov = gameInfo[j]['turnover']
+            fg = gameInfo[j]['fgm']
+            fga = gameInfo[j]['fga']
+            ft = gameInfo[j]['ftm']
+            fta = gameInfo[j]['fta']
+            score = gameScore(pts, orb, drb, ast, stl, blk, pf, tov, fg, fga, ft, fta)
+            if j == 0 or score > bestScores[i]['score']:
+                bestScores[i]['score'] = score
+                bestScores[i]['playerID'] = gameInfo[j]['id']
+                bestScores[i]['playerFirstName'] = gameInfo[j]['player']['first_name']
+                bestScores[i]['playerLastName'] = gameInfo[j]['player']['last_name']
+                bestScores[i]['team'] = gameInfo[j]['team']['full_name']
+    bestScores2 = sorted(bestScores, key=lambda i: i['score'], reverse=True)
+    return bestScores2
+
+def gameScore(pts, orb, drb, ast, stl, blk, pf, tov, fg, fga, ft, fta):
+    return round(1.54798762 * (pts + (0.4 * fg) - (0.7 * fga) - (0.4 * (fta - ft)) + (0.7 * orb) + (0.3 * drb) + stl + (0.7 * ast) + (0.7 * blk) - (0.4 * pf) - tov), 2)
+
+# GmSc - Game Score; the formula is PTS + 0.4 * FG - 0.7 * FGA - 0.4*(FTA - FT) + 0.7 * ORB + 0.3 * DRB + STL + 0.7 * AST + 0.7 * BLK - 0.4 * PF - TOV. 
+# def gameScore(data):
 
 #------------------------------------------------------------------------------------------------------------------
 
@@ -78,8 +98,6 @@ def profile(name):
     response = urlopen(link)
     jsonData = json.loads(response.read())
     return jsonData['data']
-# returns {"data":[{"id":115,"first_name":"Stephen","height_feet":6,"height_inches":3,"last_name":"Curry","position":"G","team":{"id":10,"abbreviation":"GSW","city":"Golden State","conference":"West","division":"Pacific","full_name":"Golden State Warriors","name":"Warriors"},"weight_pounds":190}],"meta":{"total_pages":1,"current_page":1,"next_page":null,"per_page":25,"total_count":1}}
-
 
 @app.route("/api/team/<name>") # gives json for the information of the team
 def teams(name):
@@ -92,16 +110,6 @@ def teams(name):
     jsonList = []
     jsonList.append(jsonData)
     return jsonList
-# returns {"id":28,"abbreviation":"TOR","city":"Toronto","conference":"East","division":"Atlantic","full_name":"Toronto Raptors","name":"Raptors"}
-
-# def teams(name):
-#     name = name.lower()
-#     index = teamIDs.index(name)
-#     link = f"https://www.balldontlie.io/api/v1/teams/"
-#     response = urlopen(link)
-#     jsonData = json.loads(response.read())
-#     jsonData = jsonData["data"][index]
-#     return jsonData
 
 @app.route("/api/player/stats/averages/<name>") # gives json for the season averages for the player (i think this may be wrong tho whoever made it is on something)
 def averages(name):
@@ -110,7 +118,6 @@ def averages(name):
     response = urlopen(link)
     jsonData = json.loads(response.read())
     return jsonData["data"]
-# returns for curry {"data":[{"games_played":36,"player_id":115,"season":2022,"min":"24:51","fgm":7.28,"fga":14.56,"fg3m":3.64,"fg3a":8.39,"ftm":3.44,"fta":3.75,"oreb":0.44,"dreb":4.31,"reb":4.75,"ast":4.92,"stl":0.75,"blk":0.25,"turnover":2.25,"pf":1.5,"pts":21.64,"fg_pct":0.5,"fg3_pct":0.434,"ft_pct":0.919}]}
 
 @app.route("/api/games/boxscores")
 def gameTeamResultsFinal():
@@ -126,13 +133,9 @@ def lastGame(name):
     gameID = 0
     while dateFound == False:
         info = gameTeamResultsFiltered(day)
-        # print(info)
         for i in range(len(info)):
-            # print("teamID is: " + str(teamID) + " and info[i]['home_team_id] is: " + str(info[i]['home_team_id']) + " and info[i]['away_team_id] is: " + str(info[i]['away_team_id']))
             if info[i]['home_team_id'] == teamID or info[i]['away_team_id'] == teamID:
-                # print("went in")
                 if info[i]['status'] == 'Final':
-                    # print("went in again")
                     dateFound = True
                     gameID = info[i]['game_id']
                     break
@@ -144,41 +147,46 @@ def lastGame(name):
     jsonData = json.loads(response.read())
     return jsonData["data"]
 
-# def lastGame(name):
-#     day = date.today()
-#     id = findPlayerID(name)
-#     teamID = profile((name))[0]['team']['id']
-#     dateFound = False
-#     gameID = 0
-#     while dateFound == False:
-#         info = gameTeamResultsFiltered(day)
-#         for item in info:
-#             if info[item][2] == teamID or info[item][5] == teamID:
-#                 if info[item][0] == 'Final':
-#                     dateFound = True
-#                     gameID = item
-#         day = day - timedelta(days = 1)
-    
-#     day = day + timedelta(days = 1)
-#     link = f"https://www.balldontlie.io/api/v1/stats?game_ids[]={gameID}&player_ids[]={id}"
+@app.route("/api/team/boxscore/<gameID>")
+def boxScore(gameID):
+    link = f"https://www.balldontlie.io/api/v1/stats?game_ids[]={gameID}&per_page=50"
+    response = urlopen(link)
+    jsonData = json.loads(response.read())
+    return jsonData["data"]
+
+@app.route("/api/team/games/<team>")
+def teamGames(team):
+    name = team.lower() 
+    iD = teamIDs.index(name) + 1
+    link = f"https://www.balldontlie.io/api/v1/games?per_page=82&seasons[]=2022&team_ids[]={iD}"
+    response = urlopen(link)
+    jsonData = json.loads(response.read())
+    jsonData = jsonData['data']
+    jsonData = sorted(jsonData, key=lambda i: i['id'])
+    counter = 0
+    for i in range(82):
+        if (jsonData[i]['status'] != 'Final'):
+            break
+        counter = counter + 1
+    # gameNumber = counter - 1
+    newList = jsonData[:counter]
+    newList = sorted(newList, key=lambda i: i['id'], reverse=True)
+    return newList
+
+@app.route("/api/player/stats/bestplayers/<date>") # format 2022-12-30
+def bestPlayers(date):
+    idList = getGameIDfromDate(date)
+    best = findBestPlayersfromGames(idList)
+    return best
+
+
+# def teamGames(team):
+#     name = team.lower() 
+#     iD = teamIDs.index(name) + 1
+#     link = f"https://www.balldontlie.io/api/v1/games?per_page=82&seasons[]=2022&team_ids[]={iD}"
 #     response = urlopen(link)
 #     jsonData = json.loads(response.read())
-#     return jsonData["data"][0]
-    
-
-
-
-
-# @app.route("/player/stats/games/<name>/<playoffs>/<season>")
-# def games(season, name, playoffs):
-#     if playoffs == True:
-#         numberGames = 16
-#     else:
-#         numberGames = 82
-#     season = season or 2022
-#     id = findPlayerID(name)
-
-#     return redirect(f"https://www.balldontlie.io/api/v1/stats?per_page={numberGames}&seasons[]={season}&player_ids={id}")
+#     return jsonData['data']
 
 
 

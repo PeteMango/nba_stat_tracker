@@ -79,4 +79,17 @@ def gameTeamResultsFiltered(date):
         gameDict[0][gameResults[i]['id']].append(gameResults[i]['visitor_team_score'])
     return gameDict
 
-print(gameTeamResultsFiltered(today))
+# print(gameTeamResultsFiltered(today))
+
+teamIDs = ["hawks", "celtics", "nets", "hornets", "bulls", "cavaliers", "mavericks", "nuggets", "pistons", "warriors", "rockets", "pacers", "clippers", "lakers", "grizzlies", "heat", "bucks", "timberwolves", "pelicans", "knicks", "thunder", "magic", "76ers", "suns", "trailblazers", "kings", "spurs", "raptors", "jazz", "wizards"]
+def teamGames(team):
+    name = team.lower() 
+    iD = teamIDs.index(name) + 1
+    link = f"https://www.balldontlie.io/api/v1/games?per_page=82&seasons[]=2022&team_ids[]={iD}"
+    response = urlopen(link)
+    jsonData = json.loads(response.read())
+    return jsonData['data']
+
+a = teamGames("raptors")
+for i in range(len(a) - 30):
+    print(a['data'][i])
