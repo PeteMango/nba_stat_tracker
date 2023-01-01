@@ -6,6 +6,9 @@ function PlayerInfo() {
   const [name, setName] = useState(input);
   const [stats, setStats] = useState([]);
 
+  const [char, setChar] = useState(input[0])
+  const [suggested, setSuggested] = useState([]);
+
   const handleChange = (event) => {
     setInput(event.target.value)
   }
@@ -24,8 +27,19 @@ function PlayerInfo() {
     }).catch(err => {
       console.log(err)
     })
-  }, [name])
+  }, [name]);
 
+  useEffect(() => {
+    const first_char = char;
+    const suggested_url = '/api/player/dictionary/active/'.concat(first_char)
+
+    axios.get(suggested_url, {
+    }).then(ret => {
+      setSuggested(ret.data)
+    }).catch(error => {
+      console.log(error)
+    })
+  }, [char]);
 
   return (
     <div>

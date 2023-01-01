@@ -1,6 +1,8 @@
 {
   "dependencies": {
+    "@reach/combobox": "^0.18.0",
     "axios": "^1.2.2",
+    "react-dropdown-input": "^0.1.11",
     "three": "^0.148.0"
   }
 }

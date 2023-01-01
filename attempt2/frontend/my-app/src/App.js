@@ -19,6 +19,7 @@ import TopPerformers from './component/TopPerformers';
 import PlayerPreviousGames from './component/PlayerPreviousGames';
 import BoxScoresDate from './component/BoxScoresDate';
 import PlayerAveragesYear from './component/PlayerAveragesYear';
+import DropdownTest from './component/DropdownTest';
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
           <Route exact path='/player/games' element={< PlayerPreviousGames />}></Route>
           <Route exact path='/boxscores/date' element={< BoxScoresDate />}></Route>
           <Route exact path='/player/averages/year' element={< PlayerAveragesYear />}></Route>
+          <Route exact path='/dropdown' element={<DropdownTest/>}></Route>
         </Routes>
       </Router>
     </div>
