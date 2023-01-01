@@ -3,13 +3,32 @@
 # https://www.balldontlie.io/api/v1/games?team_ids[]=2&per_page=82&seasons[]=2022 to find the game ids of the last few games
 # https://www.balldontlie.io/api/v1/stats?game_ids[]=857877&per_page=50 to find the box scores of each game
 
-from flask import Flask
+from flask import Flask, jsonify
 app = Flask(__name__)
 import json
 from urllib.request import urlopen
 from datetime import date, timedelta
+from nba_api.stats.static import teams
+from nba_api.stats.static import players
+from nba_api.live.nba.endpoints import scoreboard
 
 teamIDs = ["hawks", "celtics", "nets", "hornets", "bulls", "cavaliers", "mavericks", "nuggets", "pistons", "warriors", "rockets", "pacers", "clippers", "lakers", "grizzlies", "heat", "bucks", "timberwolves", "pelicans", "knicks", "thunder", "magic", "76ers", "suns", "trailblazers", "kings", "spurs", "raptors", "jazz", "wizards"]
+
+def get_all_active(char):
+    nba_players = players.get_active_players()
+    ret = []
+    for player in nba_players:
+        if(player['first_name'][0] == char):
+            ret.append(player)
+    return ret
+
+def get_all_inactive(char):
+    nba_players = players.get_inactive_players()
+    ret = []
+    for player in nba_players:
+        if(player['full_name'][0] == char):
+            ret.append(player)
+    return ret
 
 def findPlayerID(name):
     name = name.lower()
@@ -179,6 +198,13 @@ def bestPlayers(date):
     best = findBestPlayersfromGames(idList)
     return best
 
+@app.route("/api/player/dictionary/active/<char>")
+def all_active_players(char):
+    return jsonify(get_all_active(char))
+
+@app.route("/api/player/dictionary/inactive/<char>")
+def all_inactive_players(char):
+    return jsonify(get_all_inactive(char))
 
 # def teamGames(team):
 #     name = team.lower() 
