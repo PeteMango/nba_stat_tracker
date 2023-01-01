@@ -198,6 +198,29 @@ def bestPlayers(date):
     best = findBestPlayersfromGames(idList)
     return best
 
+@app.route("/api/player/stats/games/<name>")
+def games(name):
+    info = []
+    id = findPlayerID(name)
+    # teamID = profile((name))[0]['team']['id']
+    # link = f"https://www.balldontlie.io/api/v1/stats?game_ids[]={gameID}&player_ids[]={id}"
+    link = f"https://www.balldontlie.io/api/v1/stats?per_page=82&seasons[]=2022&player_ids[]={id}"
+    response = urlopen(link)
+    jsonData = json.loads(response.read())
+    jsonData = jsonData["data"]
+    # return jsonData[16]
+    # for i in range(len(jsonData)):
+    #     if jsonData[i]['id'] == id:
+    #         info.append(jsonData[i])
+    jsonData = sorted(jsonData, key=lambda i: i['game']['id'], reverse=True)
+    return jsonData
+
+@app.route("/api/boxscore/<date>")
+def boxScoreDate(date):
+    data = gameTeamResults(date)
+    data = sorted(data, key=lambda i: i['id'])
+    return data
+
 @app.route("/api/player/dictionary/active/<char>")
 def all_active_players(char):
     return jsonify(get_all_active(char))

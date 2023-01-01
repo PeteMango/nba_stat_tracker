@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from "axios";
 
-function TopPerformers() {
+function BoxScoresDate() {
   const [input, setInput] = useState('');
   const [name, setName] = useState(input);
   const [stats, setStats] = useState([]);
@@ -16,7 +16,7 @@ function TopPerformers() {
 
   useEffect(() => {
     const theName = name;
-    const theUrl = '/api/player/stats/bestplayers/'.concat(theName)
+    const theUrl = '/api/boxscore/'.concat(theName)
 
     axios.get(theUrl, {
     }).then(res => {
@@ -30,16 +30,16 @@ function TopPerformers() {
   return (
     <div>
       <div>
-        <input type="date" onChange={handleChange} placeholder="Search for Date format YYYY-MM-DD"></input>
+        <input type="date" onChange={handleChange} placeholder="Search for Date"></input>
         <button onClick={handleClick}>Submit</button>
       </div>
       {
         stats.map(stat => (
-          <div key={stat.playerID}>
-            <h1>_____________________________________________________________</h1>
-            <h1>Name: {stat.playerFirstName} {stat.playerLastName}</h1>
-            <h1>Team: {stat.team}</h1>
-            <h1>Score: {stat.score}</h1>
+          <div key={stat.id}>
+            <h1>_______________________________________</h1>
+            <h1>Status: {stat.status}</h1>
+            <h1>Home: {stat.home_team.full_name} - {stat.home_team_score}</h1>
+            <h1>Away: {stat.visitor_team.full_name} - {stat.visitor_team_score}</h1>
           </div>
         ))
       }
@@ -47,4 +47,4 @@ function TopPerformers() {
   );
 }
 
-export default TopPerformers;
+export default BoxScoresDate;
