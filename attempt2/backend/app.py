@@ -202,6 +202,16 @@ def boxScoreDate(date):
     data = sorted(data, key=lambda i: i['id'])
     return data
 
+@app.route("/api/player/stats/averages/full/<name>/<year>") # gives json for the season averages for the player (i think this may be wrong tho whoever made it is on something)
+def fullAverages(name, year):
+    # year should be 2015 for the 2015-16 season, and so i will slice string by first 4 letters
+    year = year[:4]
+    id = findPlayerID(name)
+    link = f"https://www.balldontlie.io/api/v1/season_averages?season={year}&player_ids[]={id}"
+    response = urlopen(link)
+    jsonData = json.loads(response.read())
+    return jsonData["data"]
+
 # def teamGames(team):
 #     name = team.lower() 
 #     iD = teamIDs.index(name) + 1

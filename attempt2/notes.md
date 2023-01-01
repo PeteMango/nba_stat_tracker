@@ -21,9 +21,10 @@
 
 # To-Do:
 
-1. fix /player/lastgame: just make it /player/games so it displays all their games
-2. make a /boxscores that just is similar to topperformers where you input a date and get the boxscore for that date
+<!-- 1. fix /player/lastgame: just make it /player/games so it displays all their games -->
+<!-- 2. make a /boxscores that just is similar to topperformers where you input a date and get the boxscore for that date -->
+
 3. combine /team/lastgames and /boxscores/game so when you click on a game by the team, you get the boxscore for the whole game
 4. do the same for the newly made /player/games with /boxscores/game
 5. add the season searcher for /player/averages
-6. add the calendar for inputs
+<!-- 6. add the calendar for inputs -->

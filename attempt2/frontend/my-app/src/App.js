@@ -18,6 +18,7 @@ import TeamLastXGames from './component/TeamLastXGames';
 import TopPerformers from './component/TopPerformers';
 import PlayerPreviousGames from './component/PlayerPreviousGames';
 import BoxScoresDate from './component/BoxScoresDate';
+import PlayerAveragesYear from './component/PlayerAveragesYear';
 
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
           <Route exact path='/player/topperformers' element={< TopPerformers />}></Route>
           <Route exact path='/player/games' element={< PlayerPreviousGames />}></Route>
           <Route exact path='/boxscores/date' element={< BoxScoresDate />}></Route>
+          <Route exact path='/player/averages/year' element={< PlayerAveragesYear />}></Route>
         </Routes>
       </Router>
     </div>
