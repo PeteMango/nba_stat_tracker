@@ -196,6 +196,9 @@ def games(name):
     jsonData = sorted(jsonData, key=lambda i: i['game']['id'], reverse=True)
     return jsonData
 
+@app.route("/api/boxscore/<date>")
+def boxScoreDate(date):
+    return gameTeamResults(date)
 
 # def teamGames(team):
 #     name = team.lower() 
