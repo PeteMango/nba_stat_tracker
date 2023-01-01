@@ -3,32 +3,36 @@
 # https://www.balldontlie.io/api/v1/games?team_ids[]=2&per_page=82&seasons[]=2022 to find the game ids of the last few games
 # https://www.balldontlie.io/api/v1/stats?game_ids[]=857877&per_page=50 to find the box scores of each game
 
+from nba_api.live.nba.endpoints import scoreboard
+from nba_api.stats.static import players
+from nba_api.stats.static import teams
+from datetime import date, timedelta
+from urllib.request import urlopen
+import json
 from flask import Flask, jsonify
 app = Flask(__name__)
-import json
-from urllib.request import urlopen
-from datetime import date, timedelta
-from nba_api.stats.static import teams
-from nba_api.stats.static import players
-from nba_api.live.nba.endpoints import scoreboard
 
-teamIDs = ["hawks", "celtics", "nets", "hornets", "bulls", "cavaliers", "mavericks", "nuggets", "pistons", "warriors", "rockets", "pacers", "clippers", "lakers", "grizzlies", "heat", "bucks", "timberwolves", "pelicans", "knicks", "thunder", "magic", "76ers", "suns", "trailblazers", "kings", "spurs", "raptors", "jazz", "wizards"]
+teamIDs = ["hawks", "celtics", "nets", "hornets", "bulls", "cavaliers", "mavericks", "nuggets", "pistons", "warriors", "rockets", "pacers", "clippers", "lakers",
+           "grizzlies", "heat", "bucks", "timberwolves", "pelicans", "knicks", "thunder", "magic", "76ers", "suns", "trailblazers", "kings", "spurs", "raptors", "jazz", "wizards"]
+
 
 def get_all_active(char):
     nba_players = players.get_active_players()
     ret = []
     for player in nba_players:
-        if(player['first_name'][0] == char):
+        if (player['first_name'][0] == char):
             ret.append(player)
     return ret
+
 
 def get_all_inactive(char):
     nba_players = players.get_inactive_players()
     ret = []
     for player in nba_players:
-        if(player['full_name'][0] == char):
+        if (player['full_name'][0] == char):
             ret.append(player)
     return ret
+
 
 def findPlayerID(name):
     name = name.lower()
@@ -39,11 +43,13 @@ def findPlayerID(name):
     id = jsonData["data"][0]["id"]
     return id
 
+
 def gameTeamResults(date):
     link = f"https://www.balldontlie.io/api/v1/games?start_date={date}&end_date={date}"
     response = urlopen(link)
     jsonData = json.loads(response.read())
     return jsonData["data"]
+
 
 def gameTeamResultsFiltered(date):
     gameResults = gameTeamResults(date)
@@ -61,12 +67,14 @@ def gameTeamResultsFiltered(date):
         gameList.append(gameDict)
     return gameList
 
+
 def getGameIDfromDate(day):
     gameList = gameTeamResultsFiltered(day)
     gameIDs = []
     for i in range(len(gameList)):
         gameIDs.append(gameList[i]['game_id'])
     return gameIDs
+
 
 def findBestPlayersfromGames(gameIDs):
     bestScores = []
@@ -87,7 +95,8 @@ def findBestPlayersfromGames(gameIDs):
             fga = gameInfo[j]['fga']
             ft = gameInfo[j]['ftm']
             fta = gameInfo[j]['fta']
-            score = gameScore(pts, orb, drb, ast, stl, blk, pf, tov, fg, fga, ft, fta)
+            score = gameScore(pts, orb, drb, ast, stl, blk,
+                              pf, tov, fg, fga, ft, fta)
             if j == 0 or score > bestScores[i]['score']:
                 bestScores[i]['score'] = score
                 bestScores[i]['playerID'] = gameInfo[j]['id']
@@ -97,19 +106,23 @@ def findBestPlayersfromGames(gameIDs):
     bestScores2 = sorted(bestScores, key=lambda i: i['score'], reverse=True)
     return bestScores2
 
+
 def gameScore(pts, orb, drb, ast, stl, blk, pf, tov, fg, fga, ft, fta):
     return round(1.54798762 * (pts + (0.4 * fg) - (0.7 * fga) - (0.4 * (fta - ft)) + (0.7 * orb) + (0.3 * drb) + stl + (0.7 * ast) + (0.7 * blk) - (0.4 * pf) - tov), 2)
 
-# GmSc - Game Score; the formula is PTS + 0.4 * FG - 0.7 * FGA - 0.4*(FTA - FT) + 0.7 * ORB + 0.3 * DRB + STL + 0.7 * AST + 0.7 * BLK - 0.4 * PF - TOV. 
+# GmSc - Game Score; the formula is PTS + 0.4 * FG - 0.7 * FGA - 0.4*(FTA - FT) + 0.7 * ORB + 0.3 * DRB + STL + 0.7 * AST + 0.7 * BLK - 0.4 * PF - TOV.
 # def gameScore(data):
 
-#------------------------------------------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------------------------------------------
+
 
 @app.route("/")
 def home():
     return "<div>homie</div>"
 
-@app.route("/api/player/profile/<name>") # this route gives json for the information of the player
+
+# this route gives json for the information of the player
+@app.route("/api/player/profile/<name>")
 def profile(name):
     name = name.lower()
     name = name.replace(' ', '_')
@@ -118,7 +131,8 @@ def profile(name):
     jsonData = json.loads(response.read())
     return jsonData['data']
 
-@app.route("/api/team/<name>") # gives json for the information of the team
+
+@app.route("/api/team/<name>")  # gives json for the information of the team
 def teams(name):
     name = name.lower()
     index = teamIDs.index(name)
@@ -130,7 +144,9 @@ def teams(name):
     jsonList.append(jsonData)
     return jsonList
 
-@app.route("/api/player/stats/averages/<name>") # gives json for the season averages for the player (i think this may be wrong tho whoever made it is on something)
+
+# gives json for the season averages for the player (i think this may be wrong tho whoever made it is on something)
+@app.route("/api/player/stats/averages/<name>")
 def averages(name):
     id = findPlayerID(name)
     link = f"https://www.balldontlie.io/api/v1/season_averages?player_ids[]={id}"
@@ -138,10 +154,12 @@ def averages(name):
     jsonData = json.loads(response.read())
     return jsonData["data"]
 
+
 @app.route("/api/games/boxscores")
 def gameTeamResultsFinal():
     today = date.today()
     return gameTeamResultsFiltered(today)
+
 
 @app.route("/api/player/stats/lastgame/<name>")
 def lastGame(name):
@@ -158,13 +176,14 @@ def lastGame(name):
                     dateFound = True
                     gameID = info[i]['game_id']
                     break
-        day = day - timedelta(days = 1)
-    
-    day = day + timedelta(days = 1)
+        day = day - timedelta(days=1)
+
+    day = day + timedelta(days=1)
     link = f"https://www.balldontlie.io/api/v1/stats?game_ids[]={gameID}&player_ids[]={id}"
     response = urlopen(link)
     jsonData = json.loads(response.read())
     return jsonData["data"]
+
 
 @app.route("/api/team/boxscore/<gameID>")
 def boxScore(gameID):
@@ -173,9 +192,10 @@ def boxScore(gameID):
     jsonData = json.loads(response.read())
     return jsonData["data"]
 
+
 @app.route("/api/team/games/<team>")
 def teamGames(team):
-    name = team.lower() 
+    name = team.lower()
     iD = teamIDs.index(name) + 1
     link = f"https://www.balldontlie.io/api/v1/games?per_page=82&seasons[]=2022&team_ids[]={iD}"
     response = urlopen(link)
@@ -192,11 +212,13 @@ def teamGames(team):
     newList = sorted(newList, key=lambda i: i['id'], reverse=True)
     return newList
 
-@app.route("/api/player/stats/bestplayers/<date>") # format 2022-12-30
+
+@app.route("/api/player/stats/bestplayers/<date>")  # format 2022-12-30
 def bestPlayers(date):
     idList = getGameIDfromDate(date)
     best = findBestPlayersfromGames(idList)
     return best
+
 
 @app.route("/api/player/stats/games/<name>")
 def games(name):
@@ -215,22 +237,25 @@ def games(name):
     jsonData = sorted(jsonData, key=lambda i: i['game']['id'], reverse=True)
     return jsonData
 
+
 @app.route("/api/boxscore/<date>")
 def boxScoreDate(date):
     data = gameTeamResults(date)
     data = sorted(data, key=lambda i: i['id'])
     return data
 
+
 @app.route("/api/player/dictionary/active/<char>")
 def all_active_players(char):
     return jsonify(get_all_active(char))
+
 
 @app.route("/api/player/dictionary/inactive/<char>")
 def all_inactive_players(char):
     return jsonify(get_all_inactive(char))
 
 # def teamGames(team):
-#     name = team.lower() 
+#     name = team.lower()
 #     iD = teamIDs.index(name) + 1
 #     link = f"https://www.balldontlie.io/api/v1/games?per_page=82&seasons[]=2022&team_ids[]={iD}"
 #     response = urlopen(link)
@@ -238,7 +263,5 @@ def all_inactive_players(char):
 #     return jsonData['data']
 
 
-
 if __name__ == '__main__':
     app.run(debug=True)
-
