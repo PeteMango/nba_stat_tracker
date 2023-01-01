@@ -30,7 +30,7 @@ function BoxScoresDate() {
   return (
     <div>
       <div>
-        <input type="text" onChange={handleChange} placeholder="Search for Date"></input>
+        <input type="date" onChange={handleChange} placeholder="Search for Date"></input>
         <button onClick={handleClick}>Submit</button>
       </div>
       {

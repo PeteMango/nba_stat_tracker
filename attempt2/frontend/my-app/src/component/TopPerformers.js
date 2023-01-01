@@ -30,7 +30,7 @@ function TopPerformers() {
   return (
     <div>
       <div>
-        <input type="text" onChange={handleChange} placeholder="Search for Date format YYYY-MM-DD"></input>
+        <input type="date" onChange={handleChange} placeholder="Search for Date format YYYY-MM-DD"></input>
         <button onClick={handleClick}>Submit</button>
       </div>
       {

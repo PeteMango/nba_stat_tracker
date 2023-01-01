@@ -198,7 +198,9 @@ def games(name):
 
 @app.route("/api/boxscore/<date>")
 def boxScoreDate(date):
-    return gameTeamResults(date)
+    data = gameTeamResults(date)
+    data = sorted(data, key=lambda i: i['id'])
+    return data
 
 # def teamGames(team):
 #     name = team.lower() 
