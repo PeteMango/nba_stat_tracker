@@ -1,5 +1,7 @@
 # on the frontend side (react), we have different routes:
 
+these need to be updated
+
 1. **/** - returns the homepage, nothing yet here
 2. **/player/info** - returns a search bar where when a player is inputted, we get their name, height, position, weight, and team
 3. **/team/info** - returns a search bar where when a team is inputted, we get the team name, its conference, and division

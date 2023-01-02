@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Home from "./component/Home";
 import PlayerInfo from "./component/PlayerInfo";
@@ -15,11 +15,10 @@ import PlayerPreviousGames from "./component/PlayerPreviousGames";
 import BoxScoresDate from "./component/BoxScoresDate";
 import PlayerAveragesYear from "./component/PlayerAveragesYear";
 import DropdownTest from "./component/DropdownTest";
-// import TeamLastXGamesBoxscore from "./component/TeamLastXGamesBoxscore";
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <Router>
         {/* prettier-ignore */}
         <Routes>
@@ -27,16 +26,19 @@ function App() {
           <Route exact path="/player/info" element={<PlayerInfo />}></Route>
           <Route exact path="/team/info" element={<TeamInfo />}></Route>
           <Route exact path="/player/averages" element={<PlayerAverages />}></Route>
+          <Route exact path="/player/averages/year" element={<PlayerAveragesYear />}></Route> {/* maybe incorporate /player/averages into this one where the default search is for 2022 */}
           <Route exact path="/boxscores/today" element={<TodayBoxScores />}></Route>
-          <Route exact path="/player/lastgame" element={<PlayerLastGame />}></Route>
-          {/* <Route exact path="/boxscores/game" element={<GameBoxScore />}></Route> // this is a bit redundant and may need some reconfiguring */}
-          <Route exact path="/team/lastgames" element={<TeamLastXGames />}></Route> // figure out how to get rid of extra things on date section
-          <Route exact path="/player/topperformers" element={<TopPerformers />}></Route>
-          <Route exact path="/player/games" element={<PlayerPreviousGames />}></Route>
           <Route exact path="/boxscores/date" element={<BoxScoresDate />}></Route>
-          <Route exact path="/player/averages/year" element={<PlayerAveragesYear />}></Route>
+          <Route exact path="/team/games" element={<TeamLastXGames />}></Route> {/* figure out how to get rid of extra things on date section*/}
+          <Route exact path="/player/games" element={<PlayerPreviousGames />}></Route>
+          <Route exact path="/player/topperformers" element={<TopPerformers />}></Route> {/* add link to game boxscore */}
+
+
+          <Route exact path="/player/lastgame" element={<PlayerLastGame />}></Route> {/* kinda stupid */}
           <Route exact path="/dropdown" element={<DropdownTest />}></Route>
-          <Route exact path="/boxscores/game" element={ <GameBoxScore /> }></Route>
+
+
+          <Route exact path="/boxscores/game" element={ <GameBoxScore /> }></Route> {/* not meant to be searched up */}
         </Routes>
       </Router>
     </div>
