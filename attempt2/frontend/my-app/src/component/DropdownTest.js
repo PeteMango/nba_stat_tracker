@@ -56,7 +56,11 @@ const AutoComplete = () => {
 
   const handleChange = (event) => {
     setValue(event.target.value);
-    if (value.length >= 1) {
+    console.log(value.length);
+    if(value.length <= 1) {
+      setShowSuggestions(false);
+    }
+    if (value.length > 1) {
       setFirstChar(value[0].toUpperCase());
     }
   };

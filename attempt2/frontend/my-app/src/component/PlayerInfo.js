@@ -6,8 +6,8 @@ function PlayerInfo() {
   const [name, setName] = useState(input);
   const [stats, setStats] = useState([]);
 
-  const [value, setValue] = useState("");
-  const [firstChar, setFirstChar] = useState("A");
+  const [value, setValue] = useState(".");
+  const [firstChar, setFirstChar] = useState("~");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [options, setOptions] = useState([]);
   const suggestions = options.filter((option) =>
@@ -31,23 +31,14 @@ function PlayerInfo() {
       });
   }, [name]);
 
-  useEffect(() => {
-    const handleClick = (event) => {
-      if (
-        autocompleteRef.current &&
-        !autocompleteRef.current.contains(event.target)
-      ) {
-        setShowSuggestions(false);
-      }
-    };
-    document.addEventListener("click", handleClick);
-    return () => {
-      document.removeEventListener("click", handleClick);
-    };
-  }, []);
+  const isEmpty = str => !str.trim().length;
 
   useEffect(() => {
     const starting_character = firstChar;
+    if (starting_character == "~" || value.length <= 1) {
+      setShowSuggestions(false);
+      return;
+    }
     const suggested_url = "/api/player/dictionary/active/".concat(firstChar);
     axios
       .get(suggested_url, {})
@@ -71,19 +62,36 @@ function PlayerInfo() {
   const handleChange = (event) => {
     setInput(event.target.value);
     setValue(event.target.value);
+    if(isEmpty(value) || value.length < 3) {
+      setFirstChar("~");
+      setShowSuggestions(false);
+    }
     if (value.length >= 3) {
       setFirstChar(value[0].toUpperCase());
+      setShowSuggestions(true);
     }
+    console.log(event.target.value);
   };
-  const handleClick = () => {
+  const handleClick = (suggestion) => {
     setName(input);
-  };
-
-  const handleSuggestionClick = (suggetion) => {
-    setValue(suggetion);
+    setValue(suggestion);
     setShowSuggestions(false);
   };
 
+  useEffect(() => {
+    const handleClick = (event) => {
+      if (
+        autocompleteRef.current &&
+        !autocompleteRef.current.contains(event.target)
+      ) {
+        setShowSuggestions(false);
+      }
+    };
+    document.addEventListener("click", handleClick);
+    return () => {
+      document.removeEventListener("click", handleClick);
+    };
+  }, []);
 
   return (
     <div>
@@ -91,14 +99,14 @@ function PlayerInfo() {
         <input
           value={value}
           onChange={handleChange}
-          placeholder="Search"
-          onFocus={() => setShowSuggestions(true)}
+          placeholder="search for a player"
+          // onFocus={() => setShowSuggestions(true)}
         />
         {showSuggestions && (
           <ul className="suggestions">
             {suggestions.map((suggestion) => (
               <li
-                onClick={() => handleSuggestionClick(suggestion)}
+                onClick={() => handleClick(suggestion)}
                 key={suggestion}
               >
                 {suggestion}
