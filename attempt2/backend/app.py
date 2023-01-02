@@ -257,11 +257,13 @@ def fullAverages(name, year):
 
 @app.route("/api/player/dictionary/active/<char>")
 def all_active_players(char):
+    char = char.upper()
     return jsonify(get_all_active(char))
 
 
 @app.route("/api/player/dictionary/inactive/<char>")
 def all_inactive_players(char):
+    char = char.upper()
     return jsonify(get_all_inactive(char))
 
 # def teamGames(team):
