@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
 function PlayerInfo() {
@@ -6,16 +6,15 @@ function PlayerInfo() {
   const [name, setName] = useState(input);
   const [stats, setStats] = useState([]);
 
-  const [char, setChar] = useState(input[0]);
-  const [suggested, setSuggested] = useState([]);
+  const [value, setValue] = useState("");
+  const [firstChar, setFirstChar] = useState("A");
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [options, setOptions] = useState([]);
+  const suggestions = options.filter((option) =>
+    option.toLowerCase().startsWith(value.toLowerCase())
+  );
 
-  const handleChange = (event) => {
-    setInput(event.target.value);
-  };
-
-  const handleClick = () => {
-    setName(input);
-  };
+  const autocompleteRef = useRef();
 
   useEffect(() => {
     const theName = name;
@@ -33,27 +32,80 @@ function PlayerInfo() {
   }, [name]);
 
   useEffect(() => {
-    const first_char = char;
-    const suggested_url = "/api/player/dictionary/active/".concat(first_char);
+    const handleClick = (event) => {
+      if (
+        autocompleteRef.current &&
+        !autocompleteRef.current.contains(event.target)
+      ) {
+        setShowSuggestions(false);
+      }
+    };
+    document.addEventListener("click", handleClick);
+    return () => {
+      document.removeEventListener("click", handleClick);
+    };
+  }, []);
 
+  useEffect(() => {
+    const starting_character = firstChar;
+    const suggested_url = "/api/player/dictionary/active/".concat(firstChar);
     axios
       .get(suggested_url, {})
       .then((ret) => {
-        setSuggested(ret.data);
+        console.log(firstChar);
+        console.log(ret.data);
+        var empty = [];
+        for (let i = 0; i < ret.data.length; i++) {
+          let obj = ret.data[i];
+          empty.push(obj.full_name);
+          console.log(obj.full_name);
+        }
+        setOptions(empty);
+        console.log("options are: " + options);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [char]);
+  }, [firstChar]);
+
+  const handleChange = (event) => {
+    setInput(event.target.value);
+    setValue(event.target.value);
+    if (value.length >= 3) {
+      setFirstChar(value[0].toUpperCase());
+    }
+  };
+  const handleClick = () => {
+    setName(input);
+  };
+
+  const handleSuggestionClick = (suggetion) => {
+    setValue(suggetion);
+    setShowSuggestions(false);
+  };
+
 
   return (
     <div>
-      <div>
+      <div className="autocomplete" ref={autocompleteRef}>
         <input
-          type="text"
+          value={value}
           onChange={handleChange}
-          placeholder="Search for Player"
-        ></input>
+          placeholder="Search"
+          onFocus={() => setShowSuggestions(true)}
+        />
+        {showSuggestions && (
+          <ul className="suggestions">
+            {suggestions.map((suggestion) => (
+              <li
+                onClick={() => handleSuggestionClick(suggestion)}
+                key={suggestion}
+              >
+                {suggestion}
+              </li>
+            ))}
+          </ul>
+        )}
         <button onClick={handleClick}>Submit</button>
       </div>
       {stats.map((stat) => (
