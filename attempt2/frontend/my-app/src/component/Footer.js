@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 function Footer() {
   return (
-    <div>
-      <nav className="flex border-2 border-purple-500 m-2 space-x-2">
+    <div className="flex border-2 fixed bottom-0 w-full">
+      <nav className="flex border-2 border-purple-500 m-2 space-x-2 w-full">
         <Link
           to="/boxscores/today"
           className="flex-auto basis-1/6 border-2 border-orange-500"
