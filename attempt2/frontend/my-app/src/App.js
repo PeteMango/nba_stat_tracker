@@ -18,6 +18,7 @@ import DropdownTest from "./component/DropdownTest";
 import Header from "./component/Header";
 import Footer from "./component/Footer";
 import Search from "./component/Search";
+import TopPerformersDate from "./component/TopPerformersDate";
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -54,6 +55,7 @@ function App() {
 
 
           <Route exact path="/boxscores/game" element={ <GameBoxScore /> }></Route> {/* not meant to be searched up */}
+          <Route exact path="/topperformers/date" element={ <TopPerformersDate />}></Route> {/* not meant to be searched up */}
         </Routes>
         <Footer />
       </Router>
