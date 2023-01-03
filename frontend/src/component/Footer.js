@@ -1,33 +1,32 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 function Footer() {
   return (
-    <div className="flex fixed bottom-0 w-screen bg-blue-900 bg-opacity-100">
-      <nav className="flex border-purple-500 m-2 space-x-2 w-full">
-        <Link
-          to="/boxscores/today"
-          className="flex-auto basis-1/6 border-2 border-orange-500"
-        >
-          <h4>Today</h4>
-        </Link>
-        <Link
-          to="/search"
-          className="flex-auto basis-1/3 border-2 border-orange-500"
-        >
-          <h4>Search</h4>
-        </Link>
-        <Link
-          to="/boxscores/date"
-          className="flex-auto basis-1/3 border-2 border-orange-500"
-        >
-          <h4>Box</h4>
-        </Link>
-        <h4 className="flex-auto basis-1/6 border-2 border-orange-500">
-          Login
-        </h4>
-      </nav>
-    </div>
+    <footer class="flex w-screen fixed bottom-0 bg-opacity-100 pb-4 justify-center">
+      <ul class="flex flex-wrap items-center mt-3 text-sm text-black dark:text-gray-400 sm:mt-0">
+        <li>
+          <a href="/boxscores/today" class="mr-4 hover:underline md:mr-6 ">
+            Today
+          </a>
+        </li>
+        <li>
+          <a href="/search" class="mr-4 hover:underline md:mr-6">
+            Search
+          </a>
+        </li>
+        <li>
+          <a href="/boxscores/date" class="mr-4 hover:underline md:mr-6">
+            Boxscore
+          </a>
+        </li>
+        <li>
+          <a href="#" class="hover:underline">
+            Login
+          </a>
+        </li>
+      </ul>
+    </footer>
   );
 }
 
