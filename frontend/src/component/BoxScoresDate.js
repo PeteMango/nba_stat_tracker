@@ -42,19 +42,35 @@ function BoxScoresDate() {
       <Link to={`/topperformers/date?date=${date}`}>
         Check Today's Top Players!
       </Link>
-      {stats.map((stat) => (
-        <div key={stat.id}>
-          <h1>_______________________________________</h1>
-          <h1>Status: {stat.status}</h1>
-          <h1>
-            Home: {stat.home_team.full_name} - {stat.home_team_score}
-          </h1>
-          <h1>
-            Away: {stat.visitor_team.full_name} - {stat.visitor_team_score}
-          </h1>
-          <Link to={`/boxscores/game?id=${stat.id}`}>Link to Box Score</Link>
-        </div>
-      ))}
+      <div className="grid grid-cols-2">
+        {/* <div className="grid grid-cols-3">
+
+        </div> */}
+        {stats.map((stat) => (
+          <div key={stat.id} className="border-2 border-purple-800 m-2">
+            <Link to={`/boxscores/game?id=${stat.id}`}>
+              <div className="text-center">{stat.status}</div>
+              <div className="flex">
+                <div className="flex-auto text-left py-1 px-3">
+                  <h1>{stat.home_team.name}</h1>
+                  <h1>{stat.visitor_team.name}</h1>
+                </div>
+                <div className="flex-auto text-right py-1 px-3">
+                  <h1>{stat.home_team_score}</h1>
+                  <h1>{stat.visitor_team_score}</h1>
+                </div>
+              </div>
+              {/* <h1 className="text-center">{stat.status}</h1>
+              <h1>
+                {stat.home_team.name}: {stat.home_team_score}
+              </h1>
+              <h1>
+                {stat.visitor_team.name}: {stat.visitor_team_score}
+              </h1> */}
+            </Link>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
