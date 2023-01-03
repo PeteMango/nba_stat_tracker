@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function Header(props) {
   return (
-    <div className="flex">
+    <div className="">
       <nav className="flex border-2 border-purple-500 m-2 space-x-2 dark:bg-blue-900">
         <Link to="/" className="flex-auto basis-1/2 border-2 border-orange-500">
           <h4>Mango x Norm</h4>
