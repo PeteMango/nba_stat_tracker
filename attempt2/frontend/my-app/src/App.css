@@ -74,3 +74,13 @@
   font-size: 16px;
   padding: 10px 10px 0 10px;
 }
+
+.dark {
+  @apply bg-slate-800 text-cyan-300
+  /* background-color: #121212; */
+
+}
+
+/* .light {
+  @apply bg-zinc-50 text-gray-800
+} */

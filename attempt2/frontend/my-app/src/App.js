@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -15,11 +15,25 @@ import PlayerPreviousGames from "./component/PlayerPreviousGames";
 import BoxScoresDate from "./component/BoxScoresDate";
 import PlayerAveragesYear from "./component/PlayerAveragesYear";
 import DropdownTest from "./component/DropdownTest";
+import Header from "./component/Header";
+import Footer from "./component/Footer";
+import Search from "./component/Search";
 
 function App() {
+  const [darkMode, setDarkMode] = useState(false);
+
+  function toggleDarkMode() {
+    setDarkMode((prevDarkMode) => !prevDarkMode);
+  }
+
   return (
-    <div>
+    <div
+      className={`overflow-auto overscroll-none h-screen w-screen ${
+        darkMode ? "dark" : ""
+      } border-2 border-red-800`}
+    >
       <Router>
+        <Header darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
         {/* prettier-ignore */}
         <Routes>
           <Route exact path="/" element={<Home />}></Route>
@@ -33,6 +47,7 @@ function App() {
           <Route exact path="/player/games" element={<PlayerPreviousGames />}></Route>
           <Route exact path="/player/topperformers" element={<TopPerformers />}></Route> {/* add link to game boxscore */}
 
+          <Route exact path="/search" element={<Search />}></Route>
 
           <Route exact path="/player/lastgame" element={<PlayerLastGame />}></Route> {/* kinda stupid */}
           <Route exact path="/dropdown" element={<DropdownTest />}></Route>
@@ -40,6 +55,7 @@ function App() {
 
           <Route exact path="/boxscores/game" element={ <GameBoxScore /> }></Route> {/* not meant to be searched up */}
         </Routes>
+        <Footer />
       </Router>
     </div>
   );
