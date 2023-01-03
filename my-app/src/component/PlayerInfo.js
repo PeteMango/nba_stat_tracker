@@ -1,109 +1,136 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios';
+import React, { useState, useEffect, useRef } from "react";
+import axios from "axios";
 
-const api = axios.create({
-    baseURL: 'http://127.0.0.1:5000/player/'
-})
+function PlayerInfo() {
+  const [input, setInput] = useState("");
+  const [name, setName] = useState(input);
+  const [stats, setStats] = useState([]);
 
-function PlayerPage () {
-    state = {
-        courses: []
+  const [value, setValue] = useState(".");
+  const [firstChar, setFirstChar] = useState("~");
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [options, setOptions] = useState([]);
+  const suggestions = options.filter((option) =>
+    option.toLowerCase().startsWith(value.toLowerCase())
+  );
+
+  const autocompleteRef = useRef();
+
+  useEffect(() => {
+    const theName = name;
+    const theUrl = "/api/player/profile/".concat(theName);
+
+    axios
+      .get(theUrl, {})
+      .then((res) => {
+        setStats(res.data);
+        console.log(stats);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [name]);
+
+  const isEmpty = str => !str.trim().length;
+
+  useEffect(() => {
+    const starting_character = firstChar;
+    if (starting_character == "~" || value.length <= 1) {
+      setShowSuggestions(false);
+      return;
     }
+    const suggested_url = "/api/player/dictionary/active/".concat(firstChar);
+    axios
+      .get(suggested_url, {})
+      .then((ret) => {
+        console.log(firstChar);
+        console.log(ret.data);
+        var empty = [];
+        for (let i = 0; i < ret.data.length; i++) {
+          let obj = ret.data[i];
+          empty.push(obj.full_name);
+          console.log(obj.full_name);
+        }
+        setOptions(empty);
+        console.log("options are: " + options);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [firstChar]);
 
-    // constructor() {
-    //     super();
-    //     api.get('/').then(res=> {
-    //         console.log(res.data)
-    //         this.setState({ courses : res.data})
-    //     })
-    // }
+  const handleChange = (event) => {
+    setInput(event.target.value);
+    setValue(event.target.value);
+    if(isEmpty(value) || value.length < 3) {
+      setFirstChar("~");
+      setShowSuggestions(false);
+    }
+    if (value.length >= 3) {
+      setFirstChar(value[0].toUpperCase());
+      setShowSuggestions(true);
+    }
+    console.log(event.target.value);
+  };
+  const handleClick = (suggestion) => {
+    setName(input);
+    setValue(suggestion);
+    setShowSuggestions(false);
+  };
 
-    /* player information */
-    const [player_id, set_player_id] = useState(null)
-    const [is_active, set_player_activity] = useState(null)
+  useEffect(() => {
+    const handleClick = (event) => {
+      if (
+        autocompleteRef.current &&
+        !autocompleteRef.current.contains(event.target)
+      ) {
+        setShowSuggestions(false);
+      }
+    };
+    document.addEventListener("click", handleClick);
+    return () => {
+      document.removeEventListener("click", handleClick);
+    };
+  }, []);
 
-    const [full_name, set_player_full_name] = useState(null)
-    const [first_name, set_player_first_name] = useState(null)
-    const [last_name, set_player_last_name] = useState(null)        
-
-    useEffect(() => {
-        fetch('/player/').then(response => {
-            if(response.ok) {
-                return response.json()
-            } throw response;
-        }).then(data => {set_player_id(data.id)})
-    })
-
-    useEffect(() => {
-        fetch('/player').then(response => {
-            if(response.ok) {
-                return response.json()
-            } throw response;
-        }).then(data => {set_player_full_name(data.full_name)})
-    })
-
-    useEffect(() => {
-        fetch('/player').then(response => {
-            if(response.ok) {
-                return response.json()
-            } throw response;
-        }).then(data => {set_player_first_name(data.first_name)})
-    })
-
-    useEffect(() => {
-        fetch('/player').then(response => {
-            if(response.ok) {
-                return response.json()
-            } throw response;
-        }).then(data => {set_player_last_name(data.last_name)})
-    })
-
-    useEffect(() => {
-        fetch('/player').then(response => {
-            if(response.ok) {
-                return response.json()
-            } throw response;
-        }).then(data => {set_player_activity(data.is_active === 'true'?"no":"yes")})
-    })
-
-    return (
-        <div>
-            <p>the name of the player is {full_name}</p>
-            <p>the first name of the player is {first_name}</p>
-            <p>the last name of the player is {last_name}</p>
-            <p>the id of the player is {player_id}</p>
-            <p>the player is active {is_active}</p>
-            <div className="grid grid-cols-1 content-between py-10 px-20">
-                <input className="border-cyan-500 border-2" type="text" placeholder="Search Player" />
-            </div>
+  return (
+    <div>
+      <div className="autocomplete" ref={autocompleteRef}>
+        <input
+          value={value}
+          onChange={handleChange}
+          placeholder="search for a player"
+          // onFocus={() => setShowSuggestions(true)}
+        />
+        {showSuggestions && (
+          <ul className="suggestions">
+            {suggestions.map((suggestion) => (
+              <li
+                onClick={() => handleClick(suggestion)}
+                key={suggestion}
+              >
+                {suggestion}
+              </li>
+            ))}
+          </ul>
+        )}
+        <button onClick={handleClick}>Submit</button>
+      </div>
+      {stats.map((stat) => (
+        <div key={stat.id}>
+          <h1>
+            Name: {stat.first_name} {stat.last_name}
+          </h1>
+          <h1>
+            Height: {stat.height_feet}'{stat.height_inches}
+          </h1>
+          <h1>Position: {stat.position}</h1>
+          <h1>Weight: {stat.weight_pounds}</h1>
+          <h1>Team: {stat.team.full_name}</h1>
         </div>
-        );
+      ))}
+    </div>
+  );
 }
 
-
-export default PlayerPage
-
-// // {"data": [{"id":237,"first_name":"LeBron","height_feet":6,"height_inches":8,"last_name":"James","position":"F","team":{"id":14,"abbreviation":"LAL","city":"Los Angeles","conference":"West","division":"Pacific","full_name":"Los Angeles Lakers","name":"Lakers"},"weight_pounds":250}],"meta":{"total_pages":1,"current_page":1,"next_page":null,"per_page":25,"total_count":1}}
-// /*
-// data:
-//     id:
-//     first_name:
-//     height_feet:
-//     height_inches:
-//     last_name:
-//     position:
-//     team:
-//         id:
-//         abbreviation:
-//         city:
-//         conference:
-//         division:
-//         full_name:
-//         name:
-// meta:
-//     total_pages:
-//     current_page:
-//     next_page:
-//     per_page:
-//     total_count:
-// */
+export default PlayerInfo;

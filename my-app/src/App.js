@@ -1,93 +1,65 @@
-import logo from './logo.png';
-import './App.css';
-import { useState } from 'react';
-import {
-	BrowserRouter as Router,
-	Routes,
-	Route,
-	Link
-} from 'react-router-dom';
-import Home from './component/HomePage';
-import BoxScores from './component/BoxScores'
-import PlayerPage from './component/PlayerInfo'
-import TeamPage from './component/TeamInfo'
-import GameDetails from './component/GameDetail'
-import TeamProfile from './component/TeamProfile'
+import { React, useState } from "react";
+import "./App.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-
-function SearchBar() {
-  const [message, setMessage] = useState('');
-  const [updated, setUpdated] = useState(message);
-
-  const handleChange = (event) => {
-    setMessage(event.target.value);
-  }
-
-  const handleClick = () => {
-    setUpdated(message);
-  };
-
-  return (
-    <div className="content-center border-purple-800 border-2">
-      <div className="p-4 border-emerald-800 border-2 flex justify-center"><input className="p-1 border-emerald-800 border-2" type="text" placeholder="enter nba team" id="team" value={message} onChange={handleChange}/></div>
-      <div className="p-2"></div>
-      <div className="p-4 border-red-800 border-2 flex justify-center"><button className="p-1 border-red-800 border-2"onClick={handleClick}>Enter</button></div>
-      <div className="p-2"></div>
-      <div className="p-4 border-neutral-800 border-2 flex justify-center"><h2>team: {updated}</h2></div>
-      <div className="p-2"></div>
-    </div>
-  );
-}
-
-function Nav() {
-
-  return (
-    <div className="grid grid-cols-2 content-between flex-auto font-black font-mono subpixel-antialiased tracking-tight">
-      <div className="border-b-neutral-500 border-2 grid grid-cols-4 content-center py-2">
-        <div className="grid justify-items-center">
-          <Link to="/">
-            <img src={logo} alt="LOGO" className="h-12"/>
-          </Link>
-        </div>
-        <div className="grid content-center text-center hover:underline">
-          <Link to="/boxscores">
-            <h1>Box Scores</h1>
-          </Link>
-        </div>
-        <div className="grid content-center text-center hover:underline">
-          <Link to="/players">
-            <h1>Player Info</h1>
-          </Link>
-        </div>
-        <div className="grid content-center text-center hover:underline">
-          <Link to="/teams">
-            <h1>Team Info</h1>
-          </Link>
-        </div>
-      </div>
-      <div className="border-b-neutral-500 border-2 grid grid-cols-1 content-center">
-        <input className="border-neutral-500 border-2 m-4 py-4 rounded-full h-3 px-3" type="text" placeholder="Search" />
-      </div>
-    </div>
-  );
-}
+import Home from "./component/Home";
+import PlayerInfo from "./component/PlayerInfo";
+import TeamInfo from "./component/TeamInfo"; //this one isn't working yet
+import PlayerAverages from "./component/PlayerAverages";
+import TodayBoxScores from "./component/TodayBoxScores";
+import PlayerLastGame from "./component/PlayerLastGame";
+import GameBoxScore from "./component/GameBoxScore";
+import TeamLastXGames from "./component/TeamLastXGames";
+import TopPerformers from "./component/TopPerformers";
+import PlayerPreviousGames from "./component/PlayerPreviousGames";
+import BoxScoresDate from "./component/BoxScoresDate";
+import PlayerAveragesYear from "./component/PlayerAveragesYear";
+import DropdownTest from "./component/DropdownTest";
+import Header from "./component/Header";
+import Footer from "./component/Footer";
+import Search from "./component/Search";
 
 function App() {
+  const [darkMode, setDarkMode] = useState(false);
+
+  function toggleDarkMode() {
+    setDarkMode((prevDarkMode) => !prevDarkMode);
+  }
+
   return (
-    <Router>
-      <div >
-        <Nav />
-      </div>
-      <Routes>
-        <Route exact path='/' element={< Home />}></Route>
-        <Route exact path='/boxscores' element={< BoxScores />}></Route>
-        <Route exact path='/players' element={< PlayerPage />}></Route>
-        <Route exact path='/teams' element={< TeamPage />}></Route>
-        <Route exact path='/gamedetails' element={< GameDetails />}></Route>
-        {/* <Route exact path='/playerprofile' element={< PlayerProfile />}></Route> */}
-        <Route exact path='/teamprofile' element={< TeamProfile />}></Route>
-      </Routes>
-    </Router>
+    <div
+      className={`overflow-auto overscroll-none h-screen w-screen ${
+        darkMode ? "dark" : ""
+      } border-2 border-red-800`}
+    >
+      <Router>
+        <Header darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+        {/* prettier-ignore */}
+        <Routes>
+          <Route exact path="/" element={<Home />}></Route>
+          <Route exact path="/player/info" element={<PlayerInfo />}></Route>
+          <Route exact path="/team/info" element={<TeamInfo />}></Route>
+          <Route exact path="/player/averages" element={<PlayerAverages />}></Route>
+          <Route exact path="/player/averages/year" element={<PlayerAveragesYear />}></Route> {/* maybe incorporate /player/averages into this one where the default search is for 2022 */}
+          <Route exact path="/boxscores/today" element={<TodayBoxScores />}></Route>
+          <Route exact path="/boxscores/date" element={<BoxScoresDate />}></Route>
+          <Route exact path="/team/games" element={<TeamLastXGames />}></Route> {/* figure out how to get rid of extra things on date section*/}
+          <Route exact path="/player/games" element={<PlayerPreviousGames />}></Route>
+          <Route exact path="/player/topperformers" element={<TopPerformers />}></Route> {/* add link to game boxscore */}
+
+          <Route exact path="/search" element={<Search />}></Route>
+
+          <Route exact path="/player/lastgame" element={<PlayerLastGame />}></Route> {/* kinda stupid */}
+          <Route exact path="/dropdown" element={<DropdownTest />}></Route>
+
+
+          <Route exact path="/boxscores/game" element={ <GameBoxScore /> }></Route> {/* not meant to be searched up */}
+        </Routes>
+        <div className="container h-3">
+        <Footer />
+        </div>
+      </Router>
+    </div>
   );
 }
 
