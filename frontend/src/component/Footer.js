@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 
 function Footer() {
   return (
-    <footer className="flex w-screen fixed bottom-0 bg-opacity-100 pb-4 justify-center">
-      <ul className="flex flex-wrap items-center mt-3 text-sm text-black dark:text-gray-400 sm:mt-0">
+    <footer className="flex w-screen fixed bottom-0 bg-opacity-100 bg-white dark:bg-[#1e293b] pb-4 justify-center">
+      <ul className="flex flex-wrap items-center justify-center mt-3 text-sm text-black dark:text-gray-400 sm:mt-0">
         <li>
-          <a href="/boxscores/today" className="mr-4 hover:underline md:mr-6 ">
+          <a href="/boxscores/today" className="mr-4 hover:underline md:mr-6">
             Today
           </a>
         </li>
