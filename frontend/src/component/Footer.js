@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 function Footer() {
   return (
-    <div className="flex fixed bottom-0 w-screen bg-white">
+    <div className="flex fixed bottom-0 w-screen bg-transparent bg-blue-900 bg-opacity-100">
       <nav className="flex border-purple-500 m-2 space-x-2 w-full">
         <Link
           to="/boxscores/today"

@@ -46,8 +46,8 @@ function Search() {
           </label>
         </div>
       </nav>
-      <div>{playersShown == "Players" && <PlayerInfo />}</div>
-      <div>{playersShown == "Teams" && <TeamInfo />}</div>
+      <div>{playersShown === "Players" && <PlayerInfo />}</div>
+      <div>{playersShown === "Teams" && <TeamInfo />}</div>
     </div>
   );
 }

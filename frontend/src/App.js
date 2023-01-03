@@ -56,7 +56,7 @@ function App() {
           <Route exact path="/boxscores/game" element={ <GameBoxScore /> }></Route> {/* not meant to be searched up */}
         </Routes>
         <div className="container h-3">
-        <Footer />
+          <Footer />
         </div>
       </Router>
     </div>
