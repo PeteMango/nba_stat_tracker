@@ -1,3 +1,5 @@
+// make 2 boxscores one with home team stats and another with away team stats
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 // import { useParams } from "react-router-dom";
@@ -32,10 +34,10 @@ function GameBoxScore() {
   return (
     <div>
       {box.map((game) => (
-        <div key={game.player.id}>
+        <div key={game.player.id} className="border-2 border-purple-800 my-2">
           <h1>
             {game.player.first_name} {game.player.last_name}: {game.pts} PTS,{" "}
-            {game.reb} REB, {game.ast} AST
+            {game.reb} REB, {game.ast} AST, {game.team.full_name}
           </h1>
         </div>
       ))}

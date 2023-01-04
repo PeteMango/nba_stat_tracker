@@ -23,22 +23,28 @@ function TopPerformersDate() {
   }, [date]);
 
   return (
-    <div>
-      {stats.map((stat) => (
-        <div key={stat.playerID}>
-          <h1>_____________________________________________________________</h1>
-          <h1>
-            Name: {stat.playerFirstName} {stat.playerLastName}
-          </h1>
-          <h1>Team: {stat.team}</h1>
-          <h1>Score: {stat.score}</h1>
-          <h1>
-            <Link to={`/boxscores/game?id=${stat.gameID}`}>
-              Link to Box Score
+    <div className="text-center">
+      <div>Best Players in Each Game on {date}</div>
+      <div className="grid grid-cols-1">
+        {stats.map((stat) => (
+          <div
+            className="border-2 border-purple-800 mx-6 my-2"
+            key={stat.playerID}
+          >
+            <Link to={`/boxscores/game?id=${stat.gameID}`} className="flex">
+              <div className="flex-auto basis-2/3 text-left mx-2 my-1">
+                <h1>
+                  {stat.playerFirstName} {stat.playerLastName}
+                </h1>
+                <h1>{stat.playerTeam}</h1>
+              </div>
+              <div className="flex-auto basis-1/3 my-1 mx-2">
+                <h1>Score: {stat.score}</h1>
+              </div>
             </Link>
-          </h1>
-        </div>
-      ))}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

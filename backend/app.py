@@ -69,10 +69,11 @@ def gameTeamResultsFiltered(date):
 
 
 def getGameIDfromDate(day):
-    gameList = gameTeamResultsFiltered(day)
+    # gameList = gameTeamResultsFiltered(day)
+    gameList = gameTeamResults(day)
     gameIDs = []
     for i in range(len(gameList)):
-        gameIDs.append(gameList[i]['game_id'])
+        gameIDs.append(gameList[i]['id'])
     return gameIDs
 
 
@@ -102,7 +103,7 @@ def findBestPlayersfromGames(gameIDs):
                 bestScores[i]['playerID'] = gameInfo[j]['id']
                 bestScores[i]['playerFirstName'] = gameInfo[j]['player']['first_name']
                 bestScores[i]['playerLastName'] = gameInfo[j]['player']['last_name']
-                bestScores[i]['team'] = gameInfo[j]['team']['full_name']
+                bestScores[i]['playerTeam'] = gameInfo[j]['team']['full_name']
     bestScores2 = sorted(bestScores, key=lambda i: i['score'], reverse=True)
     return bestScores2
 
