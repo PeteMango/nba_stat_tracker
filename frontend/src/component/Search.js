@@ -9,11 +9,11 @@ function Search() {
   };
 
   return (
-    <div>
-      <nav className="flex">
-        <div className="flex-auto">
+    <div className="mt-10">
+      <nav className="flex items-stretch text-center p-2 border-2 border-purple-500">
+        <div className="flex-auto basis-1/2">
           <input
-            className="sr-only peer"
+            className="sr-only peer "
             type="radio"
             name="answer"
             value="Players"
@@ -23,12 +23,12 @@ function Search() {
           />
           <label
             htmlFor="answer_players"
-            className="peer-checked:border-green-500 peer-checked:border-2 basis-full"
+            className="peer-checked:border-green-500 peer-checked:border-2 py-2 px-14 rounded-full"
           >
             Players
           </label>
         </div>
-        <div className="flex-auto">
+        <div className="flex-auto basis-1/2">
           <input
             className="sr-only peer "
             type="radio"
@@ -40,7 +40,7 @@ function Search() {
           />
           <label
             htmlFor="answer_teams"
-            className="peer-checked:border-green-500 peer-checked:border-2"
+            className="peer-checked:border-green-500 peer-checked:border-2 py-2 px-14 rounded-full"
           >
             Teams
           </label>

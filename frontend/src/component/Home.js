@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function Home() {
   return (
-    <main>
+    <main className="mt-10">
       THIS IS THE HOMEPAGE
       <nav>
         <ul style={{ listStyleType: "none" }}>

@@ -31,7 +31,7 @@ function PlayerInfo() {
       });
   }, [name]);
 
-  const isEmpty = str => !str.trim().length;
+  const isEmpty = (str) => !str.trim().length;
 
   useEffect(() => {
     const starting_character = firstChar;
@@ -62,7 +62,7 @@ function PlayerInfo() {
   const handleChange = (event) => {
     setInput(event.target.value);
     setValue(event.target.value);
-    if(isEmpty(value) || value.length < 3) {
+    if (isEmpty(value) || value.length < 3) {
       setFirstChar("~");
       setShowSuggestions(false);
     }
@@ -105,10 +105,7 @@ function PlayerInfo() {
         {showSuggestions && (
           <ul className="suggestions">
             {suggestions.map((suggestion) => (
-              <li
-                onClick={() => handleClick(suggestion)}
-                key={suggestion}
-              >
+              <li onClick={() => handleClick(suggestion)} key={suggestion}>
                 {suggestion}
               </li>
             ))}

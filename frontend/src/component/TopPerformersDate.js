@@ -23,7 +23,7 @@ function TopPerformersDate() {
   }, [date]);
 
   return (
-    <div className="text-center">
+    <div className="text-center mt-10">
       <div>Best Players in Each Game on {date}</div>
       <div className="grid grid-cols-1">
         {stats.map((stat) => (

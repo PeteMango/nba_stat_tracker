@@ -30,19 +30,31 @@ function BoxScoresDate() {
   }, [date]);
 
   return (
-    <div>
+    <div className="mt-7">
       <div>
-        <input
-          type="date"
-          onChange={handleChange}
-          placeholder="Search for Date"
-        ></input>
-        <button onClick={handleClick}>Submit</button>
+        <div className="border-2 border-red-500 flex justify-center pt-8 pb-4 px-16">
+          <input
+            type="date"
+            onChange={handleChange}
+            className="rounded-full flex-auto py-2 px-4 text-black"
+          ></input>
+        </div>
+        <div className="flex justify-center">
+          <button
+            onClick={handleClick}
+            className="border-2 border-purple-500 flex-auto mx-16 rounded-full mb-4"
+          >
+            Submit
+          </button>
+        </div>
+        <Link
+          to={`/topperformers/date?date=${date}`}
+          className="flex flex-auto justify-center border-2 border-lime-400 mx-16 rounded-full"
+        >
+          Check Today's Top Players!
+        </Link>
       </div>
-      <Link to={`/topperformers/date?date=${date}`}>
-        Check Today's Top Players!
-      </Link>
-      <div className="grid grid-cols-2">
+      <div className="grid grid-cols-2 mt-4">
         {/* <div className="grid grid-cols-3">
 
         </div> */}

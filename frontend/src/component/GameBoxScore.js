@@ -7,41 +7,117 @@ import axios from "axios";
 function GameBoxScore() {
   const queryParameters = new URLSearchParams(window.location.search);
   const gameID = queryParameters.get("id");
-  //   const { game } = useParams();
-  //   const [gameID, setGameID] = useState(0);
 
-  const [box, setBox] = useState([]);
-
-  //   useEffect(() => {
-  //     getGameID(game).then(setGameID);
-  //   }, [game]);
-
+  const [boxHome, setBoxHome] = useState([]);
   useEffect(() => {
-    // 857877
     const theName = String(gameID);
-    const theUrl = "/api/team/boxscore/".concat(theName);
-
+    const theUrl = "/api/team/boxhome/".concat(theName);
     axios
       .get(theUrl, {})
       .then((res) => {
-        setBox(res.data);
+        setBoxHome(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
   }, [gameID]);
 
+  const [boxAway, setBoxAway] = useState([]);
+  useEffect(() => {
+    const theName = String(gameID);
+    const theUrl = "/api/team/boxaway/".concat(theName);
+    axios
+      .get(theUrl, {})
+      .then((res) => {
+        setBoxAway(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [gameID]);
+  // className="border sticky top-7 bg-opacity-100 bg-white dark:bg-slate-800"
   return (
-    <div>
-      {box.map((game) => (
-        <div key={game.player.id} className="border-2 border-purple-800 my-2">
-          <h1>
-            {game.player.first_name} {game.player.last_name}: {game.pts} PTS,{" "}
-            {game.reb} REB, {game.ast} AST, {game.team.full_name}
-          </h1>
-        </div>
-      ))}
-    </div>
+    <table className="mb-14 mt-7 z-0 table-auto text-center sticky top-7 bg-white dark:bg-slate-800">
+      <thead>
+        <tr className="z-10 border sticky top-7 bg-opacity-100 bg-white dark:bg-slate-800">
+          <th className="border px-14 py-2">Players</th>
+          <th className="border px-4 py-2">MIN</th>
+          <th className="border px-4 py-2">PTS</th>
+          <th className="border px-4 py-2">REB</th>
+          <th className="border px-4 py-2">AST</th>
+          <th className="border px-4 py-2">STL</th>
+          <th className="border px-4 py-2">BLK</th>
+          <th className="border px-4 py-2">TO</th>
+          <th className="border px-4 py-2">PF</th>
+          <th className="border px-4 py-2">FG</th>
+          <th className="border px-4 py-2">3FG</th>
+          <th className="border px-4 py-2">FT</th>
+          <th className="border px-4 py-2">DREB</th>
+          <th className="border px-4 py-2">OREB</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr className="z-20 border sticky top-7 bg-opacity-100 bg-white dark:bg-slate-800">
+          <th className="px-14 py-2">Home</th>
+        </tr>
+        {boxHome.map((game) => (
+          <tr key={game.player.id}>
+            <td className="border p-3">
+              {game.player.first_name} {game.player.last_name}
+            </td>
+            <td className="border">{game.min}</td>
+            <td className="border">{game.pts}</td>
+            <td className="border">{game.reb}</td>
+            <td className="border">{game.ast}</td>
+            <td className="border">{game.stl}</td>
+            <td className="border">{game.blk}</td>
+            <td className="border">{game.turnover}</td>
+            <td className="border">{game.pf}</td>
+            <td className="border">
+              {game.fgm}/{game.fga}
+            </td>
+            <td className="border">
+              {game.fg3m}/{game.fg3a}
+            </td>
+            <td className="border">
+              {game.ftm}/{game.fta}
+            </td>
+            <td className="border">{game.dreb}</td>
+            <td className="border">{game.oreb}</td>
+          </tr>
+        ))}
+
+        <tr className="z-20 border sticky top-7 bg-opacity-100 bg-white dark:bg-slate-800">
+          <th className="px-14 py-2">Away</th>
+        </tr>
+        {boxAway.map((game) => (
+          <tr key={game.player.id}>
+            <td className="border p-3">
+              {game.player.first_name} {game.player.last_name}
+            </td>
+            <td className="border">{game.min}</td>
+            <td className="border">{game.pts}</td>
+            <td className="border">{game.reb}</td>
+            <td className="border">{game.ast}</td>
+            <td className="border">{game.stl}</td>
+            <td className="border">{game.blk}</td>
+            <td className="border">{game.turnover}</td>
+            <td className="border">{game.pf}</td>
+            <td className="border">
+              {game.fgm}/{game.fga}
+            </td>
+            <td className="border">
+              {game.fg3m}/{game.fg3a}
+            </td>
+            <td className="border">
+              {game.ftm}/{game.fta}
+            </td>
+            <td className="border">{game.dreb}</td>
+            <td className="border">{game.oreb}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 }
 

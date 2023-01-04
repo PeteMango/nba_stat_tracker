@@ -193,6 +193,37 @@ def boxScore(gameID):
     jsonData = json.loads(response.read())
     return jsonData["data"]
 
+@app.route("/api/team/boxhome/<gameID>")
+def boxScoreHome(gameID):
+    ret = []
+    append = {}
+    link = f"https://www.balldontlie.io/api/v1/stats?game_ids[]={gameID}&per_page=50"
+    response = urlopen(link)
+    jsonData = json.loads(response.read())
+    jsonData = jsonData["data"]
+    homeTeam = jsonData[0]["game"]["home_team_id"]
+    for i in range(len(jsonData)):
+        if jsonData[i]["team"]["id"] == homeTeam:
+            append = jsonData[i]
+            ret.append(append)
+    ret = sorted(ret, key=lambda i: i['pts'], reverse=True)
+    return ret
+
+@app.route("/api/team/boxaway/<gameID>")
+def boxScoreAway(gameID):
+    ret = []
+    append = {}
+    link = f"https://www.balldontlie.io/api/v1/stats?game_ids[]={gameID}&per_page=50"
+    response = urlopen(link)
+    jsonData = json.loads(response.read())
+    jsonData = jsonData["data"]
+    awayTeam = jsonData[0]["game"]["visitor_team_id"]
+    for i in range(len(jsonData)):
+        if jsonData[i]["team"]["id"] == awayTeam:
+            append = jsonData[i]
+            ret.append(append)
+    ret = sorted(ret, key=lambda i: i['pts'], reverse=True)
+    return ret
 
 @app.route("/api/team/games/<team>")
 def teamGames(team):
