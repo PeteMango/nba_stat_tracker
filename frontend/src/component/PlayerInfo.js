@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function PlayerInfo() {
   const [input, setInput] = useState("");
@@ -113,19 +114,23 @@ function PlayerInfo() {
         )}
         <button onClick={handleClick}>Submit</button>
       </div>
-      {stats.map((stat) => (
-        <div key={stat.id}>
-          <h1>
-            Name: {stat.first_name} {stat.last_name}
-          </h1>
-          <h1>
-            Height: {stat.height_feet}'{stat.height_inches}
-          </h1>
-          <h1>Position: {stat.position}</h1>
-          <h1>Weight: {stat.weight_pounds}</h1>
-          <h1>Team: {stat.team.full_name}</h1>
-        </div>
-      ))}
+      <div className="border-2 border-purple-500 text-center m-2 p-4">
+        {stats.map((stat) => (
+          <Link to={`/player/games/name?name=${name}`} key={stat.id}>
+            {/* change the above from name to the autocompleted name? */}
+            <div className="p-2">
+              {stat.first_name} {stat.last_name}
+            </div>
+            <div className="flex p-2">
+              <div className="flex-auto">
+                {stat.height_feet}'{stat.height_inches} {stat.position},{" "}
+                {stat.weight_pounds} lbs
+              </div>
+              <div className="flex-auto">{stat.team.full_name}</div>
+            </div>
+          </Link>
+        ))}
+      </div>
     </div>
   );
 }

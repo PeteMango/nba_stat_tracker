@@ -19,6 +19,9 @@ import Header from "./component/Header";
 import Footer from "./component/Footer";
 import Search from "./component/Search";
 import TopPerformersDate from "./component/TopPerformersDate";
+import TeamLastXGamesName from "./component/TeamLastXGamesName";
+import PlayerAveragesName from "./component/PlayerAveragesName";
+import PlayerPreviousGamesName from "./component/PlayerPreviousGamesName";
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -53,7 +56,9 @@ function App() {
           <Route exact path="/player/lastgame" element={<PlayerLastGame />}></Route> {/* kinda stupid */}
           <Route exact path="/dropdown" element={<DropdownTest />}></Route>
 
-
+          <Route exact path="/player/games/name" element={<PlayerPreviousGamesName/>}></Route>
+          <Route exact path="/player/averages/name" element={<PlayerAveragesName/>}></Route>
+          <Route exact path="/team/games/name" element={<TeamLastXGamesName/>}></Route>
           <Route exact path="/topperformers/date" element={<TopPerformersDate/>}></Route>
           <Route exact path="/boxscores/game" element={ <GameBoxScore /> }></Route> {/* not meant to be searched up */}
         </Routes>

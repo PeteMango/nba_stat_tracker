@@ -9,12 +9,12 @@ function Home() {
         <ul style={{ listStyleType: "none" }}>
           <li>
             <Link to="/player/info">
-              Player Info (not done) petemango autofill combobox
+              (Added) Player Info (not done) petemango autofill combobox
             </Link>
           </li>
           <li>
             <Link to="/team/info">
-              Team Info (kinda stupid cause who's looking this up?)
+              (Added) Team Info (kinda stupid cause who's looking this up?)
             </Link>
           </li>
           <li>
@@ -24,19 +24,21 @@ function Home() {
             <Link to="player/averages/year">Player Averages Search Year</Link>
           </li>
           <li>
-            <Link to="/boxscores/today">Box Score Today</Link>
+            <Link to="/boxscores/today">(Added) Box Score Today</Link>
           </li>
           <li>
-            <Link to="/boxscores/date">Box Score Search Date</Link>
+            <Link to="/boxscores/date">(Added) Box Score Search Date</Link>
           </li>
           <li>
-            <Link to="/team/games">Team Games</Link>
+            <Link to="/team/games">(Added) Team Games</Link>
           </li>
           <li>
             <Link to="/player/games">Player Games</Link>
           </li>
           <li>
-            <Link to="/player/topperformers">Best Players from Games</Link>
+            <Link to="/player/topperformers">
+              (Added) Best Players from Games
+            </Link>
           </li>
         </ul>
       </nav>

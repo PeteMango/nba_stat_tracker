@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function TeamInfo() {
   const [input, setInput] = useState("");
@@ -50,13 +51,16 @@ function TeamInfo() {
         </div>
       </div>
       {stats.map((stat) => (
-        <div
-          key={stat.id}
-          className="border-2 border-lime-500 m-4 p-4 text-center"
-        >
-          <h1>{stat.full_name}</h1>
-          <h1>{stat.conference}ern Conference</h1>
-          <h1>{stat.division} Division</h1>
+        <div className="flex border-2 border-lime-500 m-4 p-4 text-center">
+          <Link
+            to={`/team/games/name?name=${stat.name}`}
+            key={stat.id}
+            className="flex-auto"
+          >
+            <h1>{stat.full_name}</h1>
+            <h1>{stat.conference}ern Conference</h1>
+            <h1>{stat.division} Division</h1>
+          </Link>
         </div>
       ))}
     </div>
