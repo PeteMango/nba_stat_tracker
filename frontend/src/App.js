@@ -1,6 +1,10 @@
-import { React, useState } from "react";
+// client ID: 345459671257-qhof7ackf0ko9bll0oj6ih2l8p9a1s7d.apps.googleusercontent.com
+// client secret: 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
+
+import { React, useState, useEffect } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 
 import Home from "./component/Home";
 import PlayerInfo from "./component/PlayerInfo";
