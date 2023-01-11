@@ -29,7 +29,7 @@ function TeamLastXGamesName() {
           className="border-2 border-lime-500 m-2 p-4 text-center"
         >
           <Link to={`/boxscores/game?id=${stat.id}`}>
-            <h1>{stat.date}</h1>
+            <h1>{stat.date.slice(0, 10)}</h1>
             <div className="flex">
               <div className="flex-auto text-left">
                 <h1>{stat.home_team.full_name}</h1>
