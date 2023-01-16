@@ -30,28 +30,28 @@ function BoxScoresDate() {
   }, [date]);
 
   return (
-    <div className="mt-7">
-      <div>
-        <div className="border-2 border-red-500 flex justify-center pt-8 pb-4 px-16">
+    <div className="mt-14">
+      <div className="border-2 border-b-black pb-4">
+        <div className="flex justify-center py-4 px-16">
           <input
             type="date"
             onChange={handleChange}
-            className="rounded-full flex-auto py-2 px-4 text-black"
+            className="rounded-full flex-auto py-2 px-4 text-black border-2 border-black transition ease-in-out hover:-translate-y-1 hover:scale-110 duration-300"
           ></input>
         </div>
         <div className="flex justify-center">
           <button
             onClick={handleClick}
-            className="border-2 border-purple-500 flex-auto mx-16 rounded-full mb-4"
+            className="border-2 border-black py-1 flex-auto mx-16 rounded-full mb-4 transition ease-in-out hover:-translate-y-1 hover:scale-110 duration-300"
           >
             Submit
           </button>
         </div>
         <Link
           to={`/topperformers/date?date=${date}`}
-          className="flex flex-auto justify-center border-2 border-lime-400 mx-16 rounded-full"
+          className="flex flex-auto py-1 justify-center border-2 border-black mx-16 rounded-full transition ease-in-out hover:-translate-y-1 hover:scale-110 duration-300"
         >
-          Check Today's Top Players!
+          Check The Dates Top Players!
         </Link>
       </div>
       <div className="grid grid-cols-2 mt-4">
@@ -59,7 +59,7 @@ function BoxScoresDate() {
 
         </div> */}
         {stats.map((stat) => (
-          <div key={stat.id} className="border-2 border-purple-800 m-2">
+          <div key={stat.id} className="border-2 border-black m-3 transition ease-in-out hover:-translate-y-1 hover:scale-110 duration-300">
             <Link to={`/boxscores/game?id=${stat.id}`}>
               <div className="text-center">{stat.status}</div>
               <div className="flex">

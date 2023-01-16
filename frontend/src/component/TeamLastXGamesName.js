@@ -22,11 +22,11 @@ function TeamLastXGamesName() {
   }, [name]);
 
   return (
-    <div className="mt-10">
+    <div className="mt-16">
       {stats.map((stat) => (
         <div
           key={stat.id}
-          className="border-2 border-lime-500 m-2 p-4 text-center"
+          className="border-2 border-black m-6 p-4 text-center transition ease-in-out hover:-translate-y-1 hover:scale-110 duration-300"
         >
           <Link to={`/boxscores/game?id=${stat.id}`}>
             <h1>{stat.date.slice(0, 10)}</h1>

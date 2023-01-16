@@ -18,9 +18,9 @@ function TodayBoxScores() {
   }, []);
 
   return (
-    <div className="mt-10 grid grid-cols-2">
+    <div className="mt-12 grid grid-cols-2">
       {games.map((game) => (
-        <div key={game.game_id} className="border-2 border-lime-500 m-2">
+        <div key={game.game_id} className="border-2 border-gray-500 m-4 transition ease-in-out hover:-translate-y-1 hover:scale-110 duration-300">
           <Link to={`/boxscores/game?id=${game.game_id}`}>
             <div className="text-center">{game.status}</div>
             <div className="flex">

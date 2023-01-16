@@ -33,25 +33,25 @@ function TeamInfo() {
   return (
     <div>
       <div>
-        <div className="border-2 border-red-500 flex justify-center pt-8 pb-4 px-16">
+        <div className="border-2 border-t-black flex justify-center pt-8 pb-4 px-16">
           <input
             type="text"
             onChange={handleChange}
             placeholder="Search for Team Name"
-            className="rounded-full flex-auto py-2 px-4 text-black"
+            className="rounded-full flex-auto py-2 px-4 text-black border-2 border-black"
           ></input>
         </div>
         <div className="flex justify-center">
           <button
             onClick={handleClick}
-            className="border-2 border-purple-500 flex-auto mx-16 rounded-full mb-2"
+            className="border-2 border-black flex-auto mx-16 rounded-full mb-2 transition ease-in-out hover:-translate-y-1 hover:scale-110 duration-300"
           >
             Submit
           </button>
         </div>
       </div>
       {stats.map((stat) => (
-        <div className="flex border-2 border-lime-500 m-4 p-4 text-center">
+        <div className="flex border-2 border-black m-6 p-4 text-center transition ease-in-out hover:-translate-y-1 hover:scale-110 duration-300">
           <Link
             to={`/team/games/name?name=${stat.name}`}
             key={stat.id}

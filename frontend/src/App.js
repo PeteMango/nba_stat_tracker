@@ -38,7 +38,7 @@ function App() {
     <div
       className={`overflow-auto overscroll-none h-screen w-screen ${
         darkMode ? "dark" : ""
-      } border-2 border-red-800`}
+      }`}
     >
       <Router>
         <Header darkMode={darkMode} toggleDarkMode={toggleDarkMode} />

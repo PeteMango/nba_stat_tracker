@@ -36,11 +36,13 @@ function GameBoxScore() {
       });
   }, [gameID]);
   // className="border sticky top-7 bg-opacity-100 bg-white dark:bg-slate-800"
+
+
   return (
-    <table className="mb-14 mt-7 z-0 table-auto text-center sticky top-7 bg-white dark:bg-slate-800">
+    <table className="mb-14 mt-10 z-0 table-auto text-center sticky top-7 bg-white dark:bg-slate-800">
       <thead>
-        <tr className="z-10 border sticky top-7 bg-opacity-100 bg-white dark:bg-slate-800">
-          <th className="border px-14 py-2">Players</th>
+        <tr className="z-10 border sticky top-10 bg-opacity-100 bg-white dark:bg-slate-800">
+          <th className="border px-14 py-4">Players</th>
           <th className="border px-4 py-2">MIN</th>
           <th className="border px-4 py-2">PTS</th>
           <th className="border px-4 py-2">REB</th>
@@ -57,11 +59,12 @@ function GameBoxScore() {
         </tr>
       </thead>
       <tbody>
-        <tr className="z-20 border sticky top-7 bg-opacity-100 bg-white dark:bg-slate-800">
-          <th className="px-14 py-2">Home</th>
+        <tr className="z-20 border sticky top-10 bg-opacity-100 bg-white dark:bg-slate-800">
+          <th className="px-14 py-4">Home</th>
+          
         </tr>
         {boxHome.map((game) => (
-          <tr key={game.player.id}>
+          <tr key={game.player.id} className="text-slate-500">
             <td className="border p-3">
               {game.player.first_name} {game.player.last_name}
             </td>
@@ -87,11 +90,11 @@ function GameBoxScore() {
           </tr>
         ))}
 
-        <tr className="z-20 border sticky top-7 bg-opacity-100 bg-white dark:bg-slate-800">
-          <th className="px-14 py-2">Away</th>
+        <tr className="z-20 border sticky top-10 bg-opacity-100 bg-white dark:bg-slate-800">
+          <th className="px-14 py-4">Away</th>
         </tr>
         {boxAway.map((game) => (
-          <tr key={game.player.id}>
+          <tr key={game.player.id} className="text-slate-500">
             <td className="border p-3">
               {game.player.first_name} {game.player.last_name}
             </td>

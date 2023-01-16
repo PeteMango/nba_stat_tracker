@@ -9,9 +9,9 @@ function Search() {
   };
 
   return (
-    <div className="mt-10">
-      <nav className="flex items-stretch text-center p-2 border-2 border-purple-500">
-        <div className="flex-auto basis-1/2">
+    <div className="mt-14">
+      <nav className="flex items-stretch text-center p-2 m-2">
+        <div className="flex-auto basis-1/2 transition ease-in-out hover:-translate-y-1 hover:scale-110 duration-300">
           <input
             className="sr-only peer "
             type="radio"
@@ -23,12 +23,12 @@ function Search() {
           />
           <label
             htmlFor="answer_players"
-            className="peer-checked:border-green-500 peer-checked:border-2 py-2 px-14 rounded-full"
+            className="peer-checked:font-bold peer-checked:border-black peer-checked:border-2 py-2 px-14 rounded-full"
           >
             Players
           </label>
         </div>
-        <div className="flex-auto basis-1/2">
+        <div className="flex-auto basis-1/2 transition ease-in-out hover:-translate-y-1 hover:scale-110 duration-300">
           <input
             className="sr-only peer "
             type="radio"
@@ -40,7 +40,7 @@ function Search() {
           />
           <label
             htmlFor="answer_teams"
-            className="peer-checked:border-green-500 peer-checked:border-2 py-2 px-14 rounded-full"
+            className="peer-checked:font-bold peer-checked:border-black peer-checked:border-2 py-2 px-14 rounded-full"
           >
             Teams
           </label>
