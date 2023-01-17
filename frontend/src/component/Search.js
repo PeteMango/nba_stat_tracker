@@ -10,7 +10,7 @@ function Search() {
 
   return (
     <div className="mt-14">
-      <nav className="flex items-stretch text-center p-2 m-2">
+      <nav className="flex items-stretch text-center p-4 my-2 border border-b-black">
         <div className="flex-auto basis-1/2 transition ease-in-out hover:-translate-y-1 hover:scale-110 duration-300">
           <input
             className="sr-only peer "
@@ -23,7 +23,7 @@ function Search() {
           />
           <label
             htmlFor="answer_players"
-            className="peer-checked:font-bold peer-checked:border-black peer-checked:border-2 py-2 px-14 rounded-full"
+            className="peer-checked:font-bold peer-checked:border-black peer-checked:border-2 py-2 px-12 rounded-full"
           >
             Players
           </label>

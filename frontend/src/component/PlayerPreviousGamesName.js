@@ -29,13 +29,13 @@ function PlayerPreviousGamesName() {
   }, [name]);
 
   return (
-    <div className="mt-10">
+    <div className="mt-14">
       {/* prettier-ignore */}
-      <div className="text-center underline underline-offset-2">
+      <div className="text-center hover:underline hover:underline-offset-2 pb-2">
         <Link to={`/player/averages/name?name=${name}`}>{words}'s Season Averages</Link>
       </div>
       {stats.map((stat) => (
-        <div className="border-2 border-green-500 m-2 p-4">
+        <div className="border-2 border-black m-8 px-8 py-2 mb-10 transition ease-in-out hover:-translate-y-1 hover:scale-110 duration-300">
           <Link to={`/boxscores/game?id=${stat.game.id}`} key={stat.game.id}>
             <div className="flex pb-2">
               <div className="flex-auto text-center">{stat.game.status}</div>

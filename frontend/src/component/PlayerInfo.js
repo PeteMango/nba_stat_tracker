@@ -114,7 +114,7 @@ function PlayerInfo() {
         )}
         <button onClick={handleClick}>Submit</button>
       </div>
-      <div className="border-2 border-purple-500 text-center m-2 p-4">
+      <div className="border-2 border-black text-center m-6 p-4 transition ease-in-out hover:-translate-y-1 hover:scale-110 duration-300">
         {stats.map((stat) => (
           <Link to={`/player/games/name?name=${name}`} key={stat.id}>
             {/* change the above from name to the autocompleted name? */}

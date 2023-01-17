@@ -59,7 +59,7 @@ function PlayerAveragesName() {
   //   }, [name]);
 
   return (
-    <div className="mt-10">
+    <div className="mt-14">
       <div className="flex">
         <input
           type="number"
@@ -67,19 +67,19 @@ function PlayerAveragesName() {
           max="2022"
           onChange={handleChange2}
           placeholder="Year"
-          className="flex-auto mx-4 rounded-full p-2 px-4"
+          className="border-2 border-black flex-auto mx-8 my-2 rounded-full p-2 px-4 transition ease-in-out hover:-translate-y-1 hover:scale-110 duration-300"
         ></input>
       </div>
       <div className="flex">
-        <button onClick={handleClick} className="flex-auto p-4">
+        <button onClick={handleClick} className="border-2 border-black rounded-full mx-14 flex-auto p-1 transition ease-in-out hover:-translate-y-1 hover:scale-110 duration-300">
           Submit
         </button>
       </div>
-      <div className="text-center">{words}'s Season Statistics</div>
+      <div className="text-center mt-2 py-2 border-2 border-b-black">{words}'s Season Statistics</div>
       {stats.map((stat) => (
         <div
           key={stat.player_id}
-          className="border-2 border-purple-500 p-5 m-2 grid grid-cols-2"
+          className="p-5 m-2 grid grid-cols-2"
         >
           <div>Points Per Game:</div>
           <div className="text-right">{stat.pts}</div>

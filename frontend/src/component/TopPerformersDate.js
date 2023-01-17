@@ -23,12 +23,12 @@ function TopPerformersDate() {
   }, [date]);
 
   return (
-    <div className="text-center mt-10">
+    <div className="text-center mt-14">
       <div>Best Players in Each Game on {date}</div>
       <div className="grid grid-cols-1">
         {stats.map((stat) => (
           <div
-            className="border-2 border-purple-800 mx-6 my-2"
+            className="border-2 border-black mx-6 my-2 transition ease-in-out hover:-translate-y-1 hover:scale-110 duration-300"
             key={stat.playerID}
           >
             <Link to={`/boxscores/game?id=${stat.gameID}`} className="flex">

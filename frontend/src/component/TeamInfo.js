@@ -33,7 +33,7 @@ function TeamInfo() {
   return (
     <div>
       <div>
-        <div className="border-2 border-t-black flex justify-center pt-8 pb-4 px-16">
+        <div className=" flex justify-center pt-8 pb-4 px-16">
           <input
             type="text"
             onChange={handleChange}

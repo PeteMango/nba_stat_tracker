@@ -36,18 +36,22 @@ function Home() {
   // if theres a user, show sign out, else show sign in
 
   return (
-    <main className="mt-10">
+    <main className="mt-14">
       {user && (
         <div>
-          <img src={user.picture} className="rounded-full"></img>
           <h1 className="text-center">Welcome {user.name}</h1>
+          <div className="grid justify-items-stretch justify-self-auto mx-32 my-10">
+            <img src={user.picture} className="rounded-full"></img>
+          </div>
         </div>
       )}
-      <div id="signInDiv" className="border-2 border-cyan-500"></div>
+      <div className="grid grid-rows-1 justify-center">
+        <div id="signInDiv"></div>
+      </div>
       {Object.keys(user).length != 0 && (
         <button
           onClick={(event) => handleSignOut(event)}
-          className="border-2 border-red-500"
+          className="border-2 border-black rounded-full px-2 py-1 absolute right-4 bottom-16 transition ease-in-out hover:-translate-y-1 hover:scale-110 duration-300"
         >
           Sign Out
         </button>
